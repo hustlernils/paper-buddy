@@ -1,10 +1,20 @@
 import './App.css'
+import { Input } from "./components/ui/input"
+import { Label } from "./components/ui/label"
 import { Badge } from "./components/ui/badge"
 import { Card } from "./components/ui/card"
-import {CardDescription, CardHeader} from "./components/ui/card.tsx";
+import {CardDescription, CardHeader} from "./components/ui/card";
 import { Separator } from "./components/ui/separator"
 import { Button } from "./components/ui/button"
-import { ModeToggle} from "./components/mode-toggle.tsx";
+import { ModeToggle} from "./components/mode-toggle";
+import {
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogTitle,
+    DialogHeader,
+    DialogFooter,
+    DialogClose} from "./components/ui/dialog";
 
 function App() {
 
@@ -79,11 +89,39 @@ function App() {
 
   return (
     <>
+        <title>PaperBuddy</title>
+
         <h1 className="text-5xl font-bold">Your Papers</h1>
 
         <div className="w-full flex flex-col gap-6">
-            <Button className="ml-auto">Upload Paper</Button>
+
+            <Dialog>
+                <form>
+                    <DialogTrigger asChild>
+                        <Button className="ml-auto">Upload Paper</Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                            <DialogTitle>Upload Paper</DialogTitle>
+                        </DialogHeader>
+                        <div className="grid gap-4">
+                            <div className="grid w-full max-w-sm items-center gap-3">
+                                <Label htmlFor="paper">Choose a file to upload.</Label>
+                                <Input id="paper-upload" type="file" />
+                            </div>
+                        </div>
+                        <DialogFooter>
+                            <DialogClose asChild>
+                                <Button variant="outline">Cancel</Button>
+                            </DialogClose>
+                            <Button type="submit">Upload</Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </form>
+            </Dialog>
+
             <ModeToggle></ModeToggle>
+
             <div className="w-full flex flex-wrap gap-6 justify-center">
                 {data.map((item: Paper) => {
 
@@ -103,8 +141,6 @@ function App() {
                 })}
             </div>
         </div>
-
-
     </>
   )
 }
