@@ -1,0 +1,12 @@
+services:
+  db:
+    image: postgres:18
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: papers
+    ports:
+      - "5432:5432"
+    volumes:
+      - /opt/paper-buddy/postgres-18:/var/lib/postgresql/data

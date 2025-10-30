@@ -1,0 +1,6 @@
+@PaperBuddy.Web_HostAddress = http://localhost:5009
+
+GET {{PaperBuddy.Web_HostAddress}}/hello/
+Accept: application/json
+
+###
