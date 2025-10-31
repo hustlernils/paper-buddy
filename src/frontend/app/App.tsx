@@ -15,14 +15,18 @@ import {
     DialogHeader,
     DialogFooter,
     DialogClose} from "./components/ui/dialog";
+import {type ChangeEvent, type FormEvent, useState} from "react";
+
+interface Paper {
+    title: string,
+    description: string,
+    tags: string[]
+}
 
 function App() {
 
-    interface Paper {
-      title: string,
-        description: string,
-        tags: string[]
-    }
+    const [file, setFile] = useState<File | null>(null);
+
 
     const data: Paper[] = [
         {
@@ -87,6 +91,30 @@ function App() {
         },
     ];
 
+    const uploadPaper = async () =>{
+
+        console.log(file)
+        if (!file)
+        {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file)
+
+        const response = await fetch('http://localhost:5009/papers/upload', {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error("Error while uploading data!");
+        }
+
+        const data  = await response.json();
+        console.log(data);
+    }
+
   return (
     <>
         <title>PaperBuddy</title>
@@ -96,44 +124,47 @@ function App() {
         <div className="w-full flex flex-col gap-6">
 
             <Dialog>
-                <form>
-                    <DialogTrigger asChild>
-                        <Button className="ml-auto">Upload Paper</Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                            <DialogTitle>Upload Paper</DialogTitle>
-                        </DialogHeader>
-                        <div className="grid gap-4">
-                            <div className="grid w-full max-w-sm items-center gap-3">
-                                <Label htmlFor="paper">Choose a file to upload.</Label>
-                                <Input id="paper-upload" type="file" />
-                            </div>
+                <DialogTrigger asChild>
+                    <Button className="ml-auto">Upload Paper</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>Upload Paper</DialogTitle>
+                    </DialogHeader>
+                    <form onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                        e.preventDefault();
+                        uploadPaper().then(() => console.log("success!"));
+                    }}>
+                    <div className="grid gap-4">
+                        <div className="grid w-full max-w-sm items-center gap-3">
+                            <Label htmlFor="paper">Choose a file to upload.</Label>
+                            <Input id="paper-upload" accept="application/pdf" type="file" onChange={(e: ChangeEvent<HTMLInputElement>) => setFile(e.target.files[0] || null)}/>
                         </div>
-                        <DialogFooter>
-                            <DialogClose asChild>
-                                <Button variant="outline">Cancel</Button>
-                            </DialogClose>
-                            <Button type="submit">Upload</Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </form>
+                    </div>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <Button variant="outline">Cancel</Button>
+                        </DialogClose>
+                        <Button type="submit" disabled={!file} >Upload</Button>
+                    </DialogFooter>
+                    </form>
+                </DialogContent>
             </Dialog>
 
             <ModeToggle></ModeToggle>
 
             <div className="w-full flex flex-wrap gap-6 justify-center">
-                {data.map((item: Paper) => {
+                {data.map((item: Paper, cardIndex: number) => {
 
                     return (
-                        <Card className="p-6 max-w-3xs">
+                        <Card className="p-6 max-w-3xs" key={`paper-${cardIndex}`}>
                             <CardHeader>{item.title}</CardHeader>
                             <CardDescription>{item.description}</CardDescription>
                             <Separator></Separator>
                             <div className="w-full flex flex-wrap gap-4 justify-center">
                                 <h2>Tags</h2>
-                                {item.tags.map((tag: string) => {
-                                    return (<Badge>{tag}</Badge>)
+                                {item.tags.map((tag: string, index: number) => {
+                                    return (<Badge key={`paper-${cardIndex}-tag-${index}`}>{tag}</Badge>)
                                 })}
                             </div>
                         </Card>
