@@ -1,6 +1,7 @@
 services:
-  db:
+  postgres:
     image: postgres:18
+    container_name: postgres
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -9,4 +10,4 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - /opt/paper-buddy/postgres-18:/var/lib/postgresql/data
+      - /opt/paper-buddy/postgres-18:/var/lib/postgresql
