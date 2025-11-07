@@ -15,7 +15,7 @@ import {
     DialogHeader,
     DialogFooter,
     DialogClose} from "./components/ui/dialog";
-import {type ChangeEvent, type FormEvent, useState} from "react";
+import {type ChangeEvent, type FormEvent, useEffect, useState} from "react";
 
 interface Paper {
     title: string,
@@ -26,6 +26,27 @@ interface Paper {
 function App() {
 
     const [file, setFile] = useState<File | null>(null);
+
+    useEffect(() => {
+    const fetchPapers = async () => {
+        try {
+        const response = await fetch('http://localhost:5009/papers', {
+            method: 'GET',
+        });
+
+        if (!response.ok) {
+            throw new Error("Error while fetching data!");
+        }
+
+        const data = await response.json();
+        console.log(data);
+        } catch (error) {
+        console.error(error);
+        }
+    };
+
+    fetchPapers();
+    }, []);
 
 
     const data: Paper[] = [

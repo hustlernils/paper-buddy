@@ -1,5 +1,6 @@
 using Npgsql;
 using System.Data;
+using PaperBuddy.Web.Features.GetPapers;
 using PaperBuddy.Web.Features.UploadPaper;
 
 // ReSharper disable CheckNamespace
@@ -20,6 +21,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddHandlers(this IServiceCollection services)
     {
         services.AddScoped<UploadPaperHandler>();
+        services.AddScoped<GetPapersHandler>();
 
         return services;
     }

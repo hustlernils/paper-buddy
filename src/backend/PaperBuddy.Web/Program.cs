@@ -1,3 +1,4 @@
+using PaperBuddy.Web.Features.GetPapers;
 using PaperBuddy.Web.Features.UploadPaper;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,9 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddPostgres(builder.Configuration);
+builder.Services.AddHandlers();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -25,13 +29,11 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-builder.Services.AddPostgres(builder.Configuration);
-builder.Services.AddHandlers();
-
 app.UseHttpsRedirection();
 
 app.UseCors(MyAllowSpecificOrigins);
 
 app.MapUploadPaperEndpoint();
+app.MapGetPapersEndpoint();
 
 app.Run();

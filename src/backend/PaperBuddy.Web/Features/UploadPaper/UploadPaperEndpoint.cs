@@ -12,6 +12,7 @@ public static class UploadPaperEndpoint
             {
                 var request = new UploadPaperRequest(file);
                 var paperId = await handler.HandleAsync(request);
+
                 return Results.Ok(new { PaperId = paperId });
             })
             .Accepts<UploadPaperRequest>("multipart/form-data")

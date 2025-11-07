@@ -3,30 +3,44 @@ using Dapper;
 
 namespace PaperBuddy.Web.Features.UploadPaper;
 
-public class UploadPaperHandler
+public class UploadPaperHandler(IDbConnection connection)
 {
-    private readonly IDbConnection _dbConnection;
+    private readonly IDbConnection _dbConnection = connection;
 
     public async Task<Guid> HandleAsync(UploadPaperRequest request)
     {
         var paperId = Guid.NewGuid();
 
-        await _dbConnection.ExecuteAsync(
-            @"INSERT INTO papers (id, title, authors, year, doi, url, uploaded_by, created_at)
+        _dbConnection.Open();
+        using var transaction = _dbConnection.BeginTransaction();
+
+        try
+        {
+            await _dbConnection.ExecuteAsync(
+                @"INSERT INTO papers (id, title, authors, year, doi, url, uploaded_by, created_at)
                 VALUES (@Id, @Title, @Authors, @Year, @Doi, @Url, @UploadedBy, NOW())", new
-            {
-                Id = paperId,
-                Title = "Test paper",
-                Authors = "Sparrow, Jack and Swann, Elizabeth",
-                Year = 2020,
-                Doi = "Sparrow",
-                Url = "Sparrow",
-                UploadedBy = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a"),
-            });
+                {
+                    Id = paperId,
+                    Title = "Test paper",
+                    Authors = "Sparrow, Jack and Swann, Elizabeth",
+                    Year = 2020,
+                    Doi = "Sparrow",
+                    Url = "Sparrow",
+                    UploadedBy = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a"),
+                });
 
-        await AddPaperData(request.File, paperId);
+            await AddPaperData(request.File, paperId);
 
-        return paperId;
+            transaction.Commit();
+            _dbConnection.Close();
+
+            return paperId;
+        }
+        catch (Exception e)
+        {
+            transaction.Rollback();
+            throw;
+        }
     }
 
     private async Task AddPaperData(IFormFile file, Guid paperId)
