@@ -18,10 +18,36 @@ erDiagram
         string title
         string authors
         int year
-        string journal
+        string doi
+        string url
         string pdf_path
         GUID uploaded_by FK
         datetime created_at
+    }
+    BOOKS {
+        GUID paper_id PK
+        string publisher
+        string isbn
+    }
+    ARTICLES {
+        GUID paper_id PK
+        string journal
+        string volume
+        string number
+        string pages
+        string issn
+        string keywords
+    }
+    INPROCEEDINGS {
+        GUID paper_id PK
+        string booktitle
+        string editor
+        string volume
+        string number
+        string pages
+        string address
+        int month
+        string publisher
     }
     PAPERDATA {
         GUID id PK
@@ -46,7 +72,7 @@ erDiagram
         GUID id PK
         GUID user_id FK
         string parent_type
-        int parent_id
+        GUID parent_id
         string content
         datetime created_at
     }
@@ -77,4 +103,7 @@ erDiagram
     CHATS ||--o{ CHATMESSAGES : messages
     USERS ||--o{ CHATMESSAGES : sends
     PAPERS ||--|| PAPERDATA : stores
+    ARTICLES  ||--|| PAPERS: inherits from
+    BOOKS  ||--|| PAPERS: inherits from
+    INPROCEEDINGS  ||--|| PAPERS: inherits from
 ```
