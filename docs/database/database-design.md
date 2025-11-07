@@ -20,7 +20,6 @@ erDiagram
         int year
         string doi
         string url
-        string pdf_path
         GUID uploaded_by FK
         datetime created_at
     }
@@ -36,10 +35,10 @@ erDiagram
         string number
         string pages
         string issn
-        string keywords
     }
     INPROCEEDINGS {
         GUID paper_id PK
+        string publisher
         string booktitle
         string editor
         string volume
@@ -47,7 +46,6 @@ erDiagram
         string pages
         string address
         int month
-        string publisher
     }
     PAPERDATA {
         GUID id PK
