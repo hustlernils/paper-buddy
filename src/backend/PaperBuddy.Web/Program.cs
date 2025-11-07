@@ -1,3 +1,5 @@
+using PaperBuddy.Web.Features.UploadPaper;
+
 var builder = WebApplication.CreateBuilder(args);
 
 const string  MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
@@ -18,25 +20,18 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
+builder.Services.AddPostgres(builder.Configuration);
+builder.Services.AddHandlers();
+
 app.UseHttpsRedirection();
 
 app.UseCors(MyAllowSpecificOrigins);
 
-app.MapPost("/papers/upload", async (IFormFile file) =>
-{
-    // dummy action
-    Console.WriteLine(file.FileName);
-    
-    return Results.Ok(new { message = "File uploaded successfully!" });
-})
-.DisableAntiforgery(); ;
-
+app.MapUploadPaperEndpoint();
 
 app.Run();
-

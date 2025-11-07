@@ -13,4 +13,9 @@
     <PackageReference Include="OpenAI" Version="2.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Domain\" />
+  </ItemGroup>
+
 </Project>
