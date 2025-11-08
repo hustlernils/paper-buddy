@@ -6,7 +6,6 @@ import { Card } from "./components/ui/card"
 import {CardDescription, CardHeader} from "./components/ui/card";
 import { Separator } from "./components/ui/separator"
 import { Button } from "./components/ui/button"
-import { ModeToggle} from "./components/mode-toggle";
 import {
     Dialog,
     DialogTrigger,
@@ -172,7 +171,6 @@ function App() {
                 </DialogContent>
             </Dialog>
 
-            <ModeToggle></ModeToggle>
 
             <div className="w-full flex flex-wrap gap-6 justify-center">
                 {data.map((item: Paper, cardIndex: number) => {
