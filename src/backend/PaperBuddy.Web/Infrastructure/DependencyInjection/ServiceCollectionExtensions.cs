@@ -1,7 +1,9 @@
 using Npgsql;
 using System.Data;
+using PaperBuddy.Web.Common.Abstractions;
 using PaperBuddy.Web.Features.GetPapers;
 using PaperBuddy.Web.Features.UploadPaper;
+using PaperBuddy.Web.Infrastructure.Services;
 
 // ReSharper disable CheckNamespace
 
@@ -25,4 +27,13 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
+    public static IServiceCollection AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<IEmbeddingService, OllamaEmbeddingService>();
+        services.AddScoped<ISummarizationService, OllamaSummarizationService>();
+
+        return services;
+    }
+
 }
