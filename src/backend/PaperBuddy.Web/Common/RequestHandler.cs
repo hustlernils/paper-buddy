@@ -16,7 +16,7 @@ public abstract class RequestHandler<TRequest, TResponse>(IDbConnection connecti
                 Database.Open();
             }
 
-            return await HandleAsync(request)
+            return await HandleAsync(request);
         }
         finally
         {
@@ -27,5 +27,5 @@ public abstract class RequestHandler<TRequest, TResponse>(IDbConnection connecti
         }
     }
 
-    public abstract async Task<TResponse> HandleAsync(TRequest request);
+    public abstract Task<TResponse> HandleAsync(TRequest request);
 }
