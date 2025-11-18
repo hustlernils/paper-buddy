@@ -23,7 +23,7 @@ internal sealed class SubscriptionManager() : ISubscriptionManager
 
         var messageType = messageInterface.GetGenericArguments()[0];
 
-        _consumerMap.TryAdd(messageType, consumerType);
+        _consumerMap.TryAdd(messageType, messageInterface);
     }
     
     public Type GetConsumer<TMessage>(TMessage message)

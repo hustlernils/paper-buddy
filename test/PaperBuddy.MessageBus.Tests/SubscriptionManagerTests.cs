@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using PaperBuddy.MessageBus;
+using PaperBuddy.MessageBus.Abstractions;
 
 namespace PaperBuddy.MessageBus.Tests;
 
@@ -16,6 +16,6 @@ public class SubscriptionManagerTests
         
         var consumerType = manager.GetConsumer(new TestMessage("Hello World!"));
         
-        Assert.Equal(typeof(TestMessageConsumer), consumerType);
+        Assert.Equal(typeof(IConsumer<TestMessage>), consumerType);
     }
 }
