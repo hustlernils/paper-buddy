@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using PaperBuddy.MessageBus;
 using PaperBuddy.MessageBus.Abstractions;
 
@@ -5,24 +6,24 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 internal static class SubscriptionRegistrar
 {
+    private static readonly List<Type> _consumers = [];
+    
+    public static IReadOnlyCollection<Type> Consumers => _consumers;
+    
     internal static void RegisterConsumer<TConsumer>(IServiceCollection services) where TConsumer : class
     {
-        var messageInterface = typeof(TConsumer)
+        var consumerType = typeof(TConsumer);
+        
+        var messageInterface = consumerType
             .GetInterfaces()
             .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IConsumer<>));
 
         if (messageInterface == null)
         {
-            throw new InvalidOperationException($"{typeof(TConsumer).Name} does not implement IConsumer<>");
+            throw new InvalidOperationException($"{consumerType.Name} does not implement IConsumer<>");
         }
 
-        services.AddScoped(messageInterface, typeof(TConsumer));
-
-        services.AddSingleton(provider =>
-        {
-            var manager = provider.GetRequiredService<SubscriptionManager>();
-            manager.Subscribe<TConsumer>();
-            return manager;
-        });
+        _consumers.Add(consumerType);
+        services.AddScoped(messageInterface, consumerType);
     }
 }

@@ -7,7 +7,7 @@ namespace PaperBuddy.MessageBus.Tests;
 
 internal class TestMessageConsumerWrapper : IConsumer<TestMessage>
 {
-    public static bool WasCalled = false;
+    public bool WasCalled = false;
 
     public Task ConsumeAsync(TestMessage message, CancellationToken ct)
     {
@@ -15,6 +15,7 @@ internal class TestMessageConsumerWrapper : IConsumer<TestMessage>
         return Task.CompletedTask;
     }
 }
+
 public class MessageDispatcherTests
 {
     private IServiceProvider ServiceProvider { get; }
@@ -29,17 +30,19 @@ public class MessageDispatcherTests
         });
         
         ServiceProvider = services.BuildServiceProvider();
+        
+        ServiceProvider.UseMessageBus();
     }
     
     [Fact]
     public async Task Test()
     {
-        var consumerMock = ServiceProvider.GetRequiredService<IConsumer<TestMessage>>();
+        TestMessageConsumerWrapper consumer = (TestMessageConsumerWrapper)ServiceProvider.GetRequiredService<IConsumer<TestMessage>>();
         
         var dispatcher = ServiceProvider.GetRequiredService<MessageDispatcher>();
 
         await dispatcher.DispatchAsync(new TestMessage("Hello"), CancellationToken.None);
 
-        Assert.True(TestMessageConsumerWrapper.WasCalled);
+        Assert.True(consumer.WasCalled);
     }
 }

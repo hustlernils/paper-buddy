@@ -11,13 +11,27 @@ public static class ServiceCollectionExtensions
         _ = services.AddSingleton<InMemoryMessageQueue>()
             .AddSingleton<IMessageBus, InMemoryMessageBus>()
             .AddSingleton<MessageDispatcher>()
-            .AddSingleton<ISubscriptionManager, SubscriptionManager>()
+            .AddSingleton<SubscriptionManager>()
+            .AddSingleton<ISubscriptionManager>(sp =>
+                sp.GetRequiredService<SubscriptionManager>())
             .AddHostedService<MessageProcessor>();
 
         var builder = new MessageBusBuilder(services);
         configure(builder);
-
+        
         return services;
+    }
+    
+    public static IServiceProvider UseMessageBus(this IServiceProvider provider)
+    {
+        var manager = provider.GetRequiredService<ISubscriptionManager>();
+
+        foreach (var consumer in SubscriptionRegistrar.Consumers)
+        {
+            manager.Subscribe(consumer);
+        }
+
+        return provider;
     }
 }
 

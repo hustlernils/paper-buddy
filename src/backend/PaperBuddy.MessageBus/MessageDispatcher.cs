@@ -11,7 +11,7 @@ internal class MessageDispatcher(ISubscriptionManager subscriptions, IServicePro
     public async Task DispatchAsync<TMessage>(TMessage message, CancellationToken cancellationToken)
     {
         var consumerType = _subscriptions.GetConsumer(message);
-
+        
         var consumer = _serviceProvider.GetRequiredService(consumerType) as IConsumer<TMessage>;
         
         await consumer.ConsumeAsync(message, cancellationToken);
