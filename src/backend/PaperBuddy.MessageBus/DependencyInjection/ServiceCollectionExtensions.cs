@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using PaperBuddy.MessageBus.Abstractions;
 using PaperBuddy.MessageBus;
 
@@ -11,9 +12,8 @@ public static class ServiceCollectionExtensions
         _ = services.AddSingleton<InMemoryMessageQueue>()
             .AddSingleton<IMessageBus, InMemoryMessageBus>()
             .AddSingleton<MessageDispatcher>()
-            .AddSingleton<SubscriptionManager>()
-            .AddSingleton<ISubscriptionManager>(sp =>
-                sp.GetRequiredService<SubscriptionManager>())
+            .Configure<ConsumerRegistryOptions>(options => { })
+            .AddSingleton<ISubscriptionManager, SubscriptionManager>()
             .AddHostedService<MessageProcessor>();
 
         var builder = new MessageBusBuilder(services);
@@ -25,8 +25,9 @@ public static class ServiceCollectionExtensions
     public static IServiceProvider UseMessageBus(this IServiceProvider provider)
     {
         var manager = provider.GetRequiredService<ISubscriptionManager>();
-
-        foreach (var consumer in SubscriptionRegistrar.Consumers)
+        var options = provider.GetRequiredService<IOptions<ConsumerRegistryOptions>>().Value;
+        
+        foreach (var consumer in options.ConsumerTypes)
         {
             manager.Subscribe(consumer);
         }
@@ -40,10 +41,33 @@ public interface IMessageBusBuilder
     void AddConsumer<TConsumer>() where TConsumer : class;
 }
 
+internal class ConsumerRegistryOptions
+{
+    public List<Type> ConsumerTypes { get; } = [];
+}
+
 internal class MessageBusBuilder(IServiceCollection services) : IMessageBusBuilder
 {
+    // public void AddConsumer<TConsumer>() where TConsumer : class
+    // {
+    //     SubscriptionRegistrar.RegisterConsumer<TConsumer>(services);
+    // }
+
     public void AddConsumer<TConsumer>() where TConsumer : class
     {
-        SubscriptionRegistrar.RegisterConsumer<TConsumer>(services);
+        services.AddScoped<TConsumer>();
+        
+        foreach (var @interface in typeof(TConsumer).GetInterfaces())
+        {
+            if (@interface.IsGenericType && @interface.GetGenericTypeDefinition() == typeof(IConsumer<>))
+            {
+                services.AddScoped(@interface, typeof(TConsumer));
+            }
+        }
+        
+        services.Configure<ConsumerRegistryOptions>(options =>
+        {
+            options.ConsumerTypes.Add(typeof(TConsumer));
+        });
     }
 }

@@ -33,12 +33,13 @@ public class MessageDispatcherTests
         
         ServiceProvider.UseMessageBus();
     }
-    
+
     [Fact]
     public async Task Test()
     {
-        TestMessageConsumerWrapper consumer = (TestMessageConsumerWrapper)ServiceProvider.GetRequiredService<IConsumer<TestMessage>>();
-        
+        TestMessageConsumerWrapper consumer =
+            (TestMessageConsumerWrapper)ServiceProvider.GetRequiredService<IConsumer<TestMessage>>();
+
         var dispatcher = ServiceProvider.GetRequiredService<MessageDispatcher>();
 
         await dispatcher.DispatchAsync(new TestMessage("Hello"), CancellationToken.None);

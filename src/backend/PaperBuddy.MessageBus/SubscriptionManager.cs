@@ -28,11 +28,15 @@ internal sealed class SubscriptionManager() : ISubscriptionManager
     
     public Type GetConsumer<TMessage>(TMessage message)
     {
-        if (!_consumerMap.TryGetValue(typeof(TMessage), out var consumerType))
+        if (message is null)
         {
-            throw new InvalidOperationException($"No consumer registered for type {typeof(TMessage)}");
+            throw new ArgumentNullException(nameof(message));
         }
         
-        return consumerType;
+        var messageType = message.GetType();
+        
+        return !_consumerMap.TryGetValue(messageType, out var consumerType) 
+            ? throw new InvalidOperationException($"No consumer registered for type {messageType}") 
+            : consumerType;
     }
 }

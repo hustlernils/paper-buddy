@@ -1,3 +1,3 @@
 namespace PaperBuddy.MessageBus.Tests;
 
-internal record TestMessage(string Message);
+public record TestMessage(string Message);
