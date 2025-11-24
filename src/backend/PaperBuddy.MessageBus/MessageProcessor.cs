@@ -6,7 +6,7 @@ internal class MessageProcessor : BackgroundService
 {
     private readonly InMemoryMessageQueue  _queue;
     private readonly MessageDispatcher  _dispatcher;
-    internal MessageProcessor(InMemoryMessageQueue queue, MessageDispatcher dispatcher)
+    public MessageProcessor(InMemoryMessageQueue queue, MessageDispatcher dispatcher)
     {
         _queue = queue;
         _dispatcher = dispatcher;
@@ -16,7 +16,6 @@ internal class MessageProcessor : BackgroundService
     {
         await foreach (var message in _queue.Reader.ReadAllAsync(stoppingToken))
         {
-            Console.WriteLine($"Processing message: {message}");
             await _dispatcher.DispatchAsync(message, stoppingToken);
         }  
     }

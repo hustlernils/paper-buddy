@@ -6,7 +6,7 @@ namespace PaperBuddy.Web.Features.GetPapers;
 public class GetPapersHandler(IDbConnection connection)
 {
     private readonly IDbConnection _dbConnection = connection;
-    public async Task<IEnumerable<GetPapersResponse>> HandleAsync(GetPapersRequest request)
+    public async Task<IEnumerable<GetPapersResponse>> HandleAsync(GetPapersRequest request, CancellationToken  cancellationToken)
     {
         var paperId = Guid.NewGuid();
 

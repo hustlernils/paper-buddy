@@ -11,7 +11,7 @@ public static class UploadPaperEndpoint
                 IFormFile file) =>
             {
                 var request = new UploadPaperRequest(file);
-                var paperId = await handler.HandleAsync(request);
+                var paperId = await handler.HandleAsync(request, cancellationToken: CancellationToken.None);
 
                 return Results.Ok(new { PaperId = paperId });
             })

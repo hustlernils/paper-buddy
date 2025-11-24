@@ -1,13 +1,15 @@
 using System.Data;
 using Dapper;
+using PaperBuddy.MessageBus.Abstractions;
 
 namespace PaperBuddy.Web.Features.UploadPaper;
 
-public class UploadPaperHandler(IDbConnection connection)
+public class UploadPaperHandler(IDbConnection connection, IMessageBus messageBus)
 {
     private readonly IDbConnection _dbConnection = connection;
-
-    public async Task<Guid> HandleAsync(UploadPaperRequest request)
+    private readonly IMessageBus _bus = messageBus; 
+    
+    public async Task<Guid> HandleAsync(UploadPaperRequest request, CancellationToken  cancellationToken)
     {
         var paperId = Guid.NewGuid();
 
@@ -31,6 +33,8 @@ public class UploadPaperHandler(IDbConnection connection)
 
             await AddPaperData(request.File, paperId);
 
+            await _bus.PublishAsync(new SummarizePaperRequest(paperId), cancellationToken);
+            
             transaction.Commit();
             _dbConnection.Close();
 

@@ -21,6 +21,10 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddPostgres(builder.Configuration);
 builder.Services.AddHandlers();
+builder.Services.AddMessageBus(config =>
+{
+    config.AddConsumer<SummarizePaperHandler>();
+});
 
 var app = builder.Build();
 
@@ -32,6 +36,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors(MyAllowSpecificOrigins);
+
+app.Services.UseMessageBus();
 
 app.MapUploadPaperEndpoint();
 app.MapGetPapersEndpoint();

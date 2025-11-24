@@ -10,7 +10,7 @@ public static class GetPapersEndpoint
                 [FromServices] GetPapersHandler handler) =>
             {
                 var request = new GetPapersRequest();
-                var responses = await handler.HandleAsync(request);
+                var responses = await handler.HandleAsync(request, cancellationToken: CancellationToken.None);
 
                 return Results.Ok(responses);
             })
