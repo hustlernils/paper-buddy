@@ -24,6 +24,7 @@ builder.Services.AddHandlers();
 builder.Services.AddMessageBus(config =>
 {
     config.AddConsumer<SummarizePaperHandler>();
+    config.AddConsumer<ExtractPaperInfoHandler>();
 });
 
 var app = builder.Build();

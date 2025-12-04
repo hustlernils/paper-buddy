@@ -12,7 +12,7 @@ public class GetPapersHandler(IDbConnection connection)
 
         _dbConnection.Open();
 
-        var sql = @"SELECT id, title FROM papers";
+        var sql = @"SELECT id, title, authors FROM papers";
         var papers = await _dbConnection.QueryAsync<GetPapersResponse>(sql);
 
         _dbConnection.Close();

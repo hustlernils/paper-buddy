@@ -19,21 +19,17 @@ public class UploadPaperHandler(IDbConnection connection, IMessageBus messageBus
         try
         {
             await _dbConnection.ExecuteAsync(
-                @"INSERT INTO papers (id, title, authors, year, doi, url, uploaded_by, created_at)
-                VALUES (@Id, @Title, @Authors, @Year, @Doi, @Url, @UploadedBy, NOW())", new
+                @"INSERT INTO papers (id, uploaded_by, created_at)
+                VALUES (@Id, @UploadedBy, NOW())", new
                 {
                     Id = paperId,
-                    Title = "Test paper",
-                    Authors = "Sparrow, Jack and Swann, Elizabeth",
-                    Year = 2020,
-                    Doi = "Sparrow",
-                    Url = "Sparrow",
                     UploadedBy = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a"),
+                    Title = StripPdfExtension(request.File.FileName),
                 });
 
             await AddPaperData(request.File, paperId);
 
-            await _bus.PublishAsync(new SummarizePaperRequest(paperId), cancellationToken);
+            await _bus.PublishAsync(new ExtractPaperInfoRequest(paperId), cancellationToken);
             
             transaction.Commit();
             _dbConnection.Close();
@@ -63,4 +59,6 @@ public class UploadPaperHandler(IDbConnection connection, IMessageBus messageBus
             }
         );
     }
+
+    private string StripPdfExtension(string fileName) => fileName.Substring(0, fileName.LastIndexOf('.'));
 }

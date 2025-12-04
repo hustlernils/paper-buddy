@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperBuddy.MessageBus", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperBuddy.MessageBus.Tests", "test\PaperBuddy.MessageBus.Tests\PaperBuddy.MessageBus.Tests.csproj", "{5B10AE29-D263-40F2-AAF4-3D11DBBE26FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperBuddy.Web.Tests", "test\PaperBuddy.Web.Tests\PaperBuddy.Web.Tests.csproj", "{7BD7445F-43AD-442F-881F-84EBDFEE6596}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{5B10AE29-D263-40F2-AAF4-3D11DBBE26FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B10AE29-D263-40F2-AAF4-3D11DBBE26FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B10AE29-D263-40F2-AAF4-3D11DBBE26FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BD7445F-43AD-442F-881F-84EBDFEE6596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BD7445F-43AD-442F-881F-84EBDFEE6596}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BD7445F-43AD-442F-881F-84EBDFEE6596}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BD7445F-43AD-442F-881F-84EBDFEE6596}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

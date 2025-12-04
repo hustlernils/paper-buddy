@@ -16,100 +16,105 @@ import {
     DialogClose} from "./components/ui/dialog";
 import {type ChangeEvent, type FormEvent, useEffect, useState} from "react";
 
-interface Paper {
-    title: string,
-    description: string,
-    tags: string[]
+interface GetPapersResponse
+{
+    id: string,
+    title?: string,
+    authors: string
 }
 
 function App() {
 
     const [file, setFile] = useState<File | null>(null);
+    const [responseData, setResponseData] = useState<GetPapersResponse[] | undefined>(undefined);
 
     useEffect(() => {
-    const fetchPapers = async () => {
-        try {
-        const response = await fetch('http://localhost:5009/papers', {
-            method: 'GET',
-        });
+        const fetchPapers = async () => {
+            try {
+            const response = await fetch('http://localhost:5009/papers', {
+                method: 'GET',
+            });
 
-        if (!response.ok) {
-            throw new Error("Error while fetching data!");
-        }
+            if (!response.ok) {
+                throw new Error("Error while fetching data!");
+            }
 
-        const data = await response.json();
-        console.log(data);
-        } catch (error) {
-        console.error(error);
-        }
-    };
+            const data = await response.json();
+            console.log(data);
 
-    fetchPapers();
+            setResponseData(data);
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchPapers();
     }, []);
 
 
-    const data: Paper[] = [
-        {
-            title: "Deep Learning for Medical Image Segmentation",
-            description:
-                "An overview of convolutional neural network architectures applied to organ and tumor segmentation tasks in MRI and CT scans.",
-            tags: ["AI", "Medical Imaging", "Segmentation", "Deep Learning"],
-        },
-        {
-            title: "Quantum Entanglement in Large-Scale Systems",
-            description:
-                "Experimental results demonstrating quantum entanglement in macroscopic mechanical systems under cryogenic conditions.",
-            tags: ["Quantum Physics", "Entanglement", "Experimental"],
-        },
-        {
-            title: "Transformer-Based Protein Sequence Modeling",
-            description:
-                "Introducing a transformer architecture for predicting protein folding and secondary structure directly from amino acid sequences.",
-            tags: ["AI", "Bioinformatics", "Transformers"],
-        },
-        {
-            title: "Climate Change Impacts on Arctic Sea Ice Dynamics",
-            description:
-                "A 30-year satellite analysis of seasonal variability and thickness decline in Arctic sea ice due to climate forcing.",
-            tags: ["Climate Science", "Remote Sensing", "Arctic"],
-        },
-        {
-            title: "Graph Neural Networks for Molecular Property Prediction",
-            description:
-                "A graph convolutional model trained on chemical datasets to predict solubility, toxicity, and molecular reactivity.",
-            tags: ["AI", "Chemistry", "Graph Neural Networks"],
-        },
-        {
-            title: "Advances in CRISPR Gene Editing Precision",
-            description:
-                "A comprehensive study of off-target detection methods and enhanced Cas9 variants for improved editing accuracy.",
-            tags: ["Genetics", "CRISPR", "Biotechnology"],
-        },
-        {
-            title: "Neural Radiance Fields for 3D Scene Reconstruction",
-            description:
-                "Exploring the use of neural radiance fields (NeRFs) for generating photorealistic 3D reconstructions from sparse 2D images.",
-            tags: ["Computer Vision", "3D Reconstruction", "NeRF"],
-        },
-        {
-            title: "Large Language Models as Scientific Assistants",
-            description:
-                "Evaluating GPT-style models for literature summarization, hypothesis generation, and data interpretation in research workflows.",
-            tags: ["AI", "Natural Language Processing", "Research Tools"],
-        },
-        {
-            title: "Battery Performance Optimization via Reinforcement Learning",
-            description:
-                "A reinforcement learning framework for discovering optimal charge–discharge strategies in lithium-ion batteries.",
-            tags: ["Energy", "Reinforcement Learning", "Optimization"],
-        },
-        {
-            title: "Robust Statistical Methods for Genomic Data Analysis",
-            description:
-                "Proposing a new Bayesian hierarchical model to handle high-dimensional genomic data with missing values and noise.",
-            tags: ["Statistics", "Genomics", "Bayesian Modeling"],
-        },
-    ];
+        // const data: Paper[] = [
+        //     {
+        //         title: "Deep Learning for Medical Image Segmentation",
+        //         description:
+        //             "An overview of convolutional neural network architectures applied to organ and tumor segmentation tasks in MRI and CT scans.",
+        //         tags: ["AI", "Medical Imaging", "Segmentation", "Deep Learning"],
+        //     },
+        //     {
+        //         title: "Quantum Entanglement in Large-Scale Systems",
+        //         description:
+        //             "Experimental results demonstrating quantum entanglement in macroscopic mechanical systems under cryogenic conditions.",
+        //         tags: ["Quantum Physics", "Entanglement", "Experimental"],
+        //     },
+        //     {
+        //         title: "Transformer-Based Protein Sequence Modeling",
+        //         description:
+        //             "Introducing a transformer architecture for predicting protein folding and secondary structure directly from amino acid sequences.",
+        //         tags: ["AI", "Bioinformatics", "Transformers"],
+        //     },
+        //     {
+        //         title: "Climate Change Impacts on Arctic Sea Ice Dynamics",
+        //         description:
+        //             "A 30-year satellite analysis of seasonal variability and thickness decline in Arctic sea ice due to climate forcing.",
+        //         tags: ["Climate Science", "Remote Sensing", "Arctic"],
+        //     },
+        //     {
+        //         title: "Graph Neural Networks for Molecular Property Prediction",
+        //         description:
+        //             "A graph convolutional model trained on chemical datasets to predict solubility, toxicity, and molecular reactivity.",
+        //         tags: ["AI", "Chemistry", "Graph Neural Networks"],
+        //     },
+        //     {
+        //         title: "Advances in CRISPR Gene Editing Precision",
+        //         description:
+        //             "A comprehensive study of off-target detection methods and enhanced Cas9 variants for improved editing accuracy.",
+        //         tags: ["Genetics", "CRISPR", "Biotechnology"],
+        //     },
+        //     {
+        //         title: "Neural Radiance Fields for 3D Scene Reconstruction",
+        //         description:
+        //             "Exploring the use of neural radiance fields (NeRFs) for generating photorealistic 3D reconstructions from sparse 2D images.",
+        //         tags: ["Computer Vision", "3D Reconstruction", "NeRF"],
+        //     },
+        //     {
+        //         title: "Large Language Models as Scientific Assistants",
+        //         description:
+        //             "Evaluating GPT-style models for literature summarization, hypothesis generation, and data interpretation in research workflows.",
+        //         tags: ["AI", "Natural Language Processing", "Research Tools"],
+        //     },
+        //     {
+        //         title: "Battery Performance Optimization via Reinforcement Learning",
+        //         description:
+        //             "A reinforcement learning framework for discovering optimal charge–discharge strategies in lithium-ion batteries.",
+        //         tags: ["Energy", "Reinforcement Learning", "Optimization"],
+        //     },
+        //     {
+        //         title: "Robust Statistical Methods for Genomic Data Analysis",
+        //         description:
+        //             "Proposing a new Bayesian hierarchical model to handle high-dimensional genomic data with missing values and noise.",
+        //         tags: ["Statistics", "Genomics", "Bayesian Modeling"],
+        //     },
+        // ];
 
     const uploadPaper = async () =>{
 
@@ -173,19 +178,19 @@ function App() {
 
 
             <div className="w-full flex flex-wrap gap-6 justify-center">
-                {data.map((item: Paper, cardIndex: number) => {
+                {responseData && responseData.map((item: GetPapersResponse, cardIndex: number) => {
 
                     return (
                         <Card className="p-6 max-w-3xs" key={`paper-${cardIndex}`}>
                             <CardHeader>{item.title}</CardHeader>
-                            <CardDescription>{item.description}</CardDescription>
+                            <CardDescription>{item.authors}</CardDescription>
                             <Separator></Separator>
-                            <div className="w-full flex flex-wrap gap-4 justify-center">
+                            {/* <div className="w-full flex flex-wrap gap-4 justify-center">
                                 <h2>Tags</h2>
                                 {item.tags.map((tag: string, index: number) => {
                                     return (<Badge key={`paper-${cardIndex}-tag-${index}`}>{tag}</Badge>)
                                 })}
-                            </div>
+                            </div> */}
                         </Card>
                     )
                 })}
