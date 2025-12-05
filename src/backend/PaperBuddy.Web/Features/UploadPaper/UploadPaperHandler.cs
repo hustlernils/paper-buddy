@@ -1,6 +1,7 @@
 using System.Data;
 using Dapper;
 using PaperBuddy.MessageBus.Abstractions;
+using PaperBuddy.Web.Domain;
 
 namespace PaperBuddy.Web.Features.UploadPaper;
 
@@ -16,16 +17,17 @@ public class UploadPaperHandler(IDbConnection connection, IMessageBus messageBus
         _dbConnection.Open();
         using var transaction = _dbConnection.BeginTransaction();
 
+        var paper = new Article()
+        {
+            UploadedBy = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a"),
+            Title = StripPdfExtension(request.File.FileName),
+        };
+        
         try
         {
             await _dbConnection.ExecuteAsync(
                 @"INSERT INTO papers (id, uploaded_by, title, created_at)
-                VALUES (@Id, @UploadedBy, @Title, NOW())", new
-                {
-                    Id = paperId,
-                    UploadedBy = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a"),
-                    Title = StripPdfExtension(request.File.FileName),
-                });
+                VALUES (@Id, @UploadedBy, @Title, NOW())", paper);
 
             await InsertPaperData(request.File, paperId);
 
