@@ -7,29 +7,36 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarTrigger,
 } from "./ui/sidebar"
 import { ModeToggle} from "./mode-toggle";
+import { FileText, MessageCircle } from "lucide-react";
 
 
 const items = [
     {
         title: "Your papers",
-        url: "#"
+        url: "#",
+        icon: FileText
     },
     {
         title: "Chat",
-        url: "#"
+        url: "#",
+        icon: MessageCircle
     }
 ]
 
 export function AppSidebar() {
     return (
-        <Sidebar>
+        <Sidebar side="left" collapsible="icon">
             <SidebarHeader>
-                <h1>PaperBuddy</h1>
-                <ModeToggle />
+                <div className="flex justify-between">
+                    <ModeToggle/>
+                    <SidebarTrigger/>
+                </div>
             </SidebarHeader>
             <SidebarContent>
+                
                 <SidebarGroup>
                     <SidebarGroupLabel>Papers</SidebarGroupLabel>
                     <SidebarGroupContent>
@@ -38,6 +45,7 @@ export function AppSidebar() {
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
                                         <a href={item.url}>
+                                            <item.icon />
                                             <span>{item.title}</span>
                                         </a>
                                     </SidebarMenuButton>
