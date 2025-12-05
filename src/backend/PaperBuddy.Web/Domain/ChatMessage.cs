@@ -1,3 +1,5 @@
+using PaperBuddy.Web.Domain.Entities;
+
 namespace PaperBuddy.Web.Domain;
 
 public enum MessageRole
@@ -6,12 +8,10 @@ public enum MessageRole
     System
 }
 
-public class ChatMessage
+public class ChatMessage : TrackedEntity
 {
-    public Guid Id { get; set; }
     public Guid ChatId { get; set; }
     public Guid UserId { get; set; }
     public MessageRole Role { get; set; }
     public string Content { get; set; } = string.Empty;
-    public DateTime CreatedAt { get; set; }
 }

@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PaperBuddy.MessageBus\PaperBuddy.MessageBus.csproj" />
   </ItemGroup>
 
