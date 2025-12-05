@@ -79,35 +79,34 @@ function Papers() {
 
   return (
     <>
-        <Toolbar>
-            <Header label="Your Papers" />
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button className="ml-auto">Upload Paper</Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                            <DialogTitle>Upload Paper</DialogTitle>
-                        </DialogHeader>
-                        <form onSubmit={(e: FormEvent<HTMLFormElement>) => {
-                            e.preventDefault();
-                            uploadPaper().then(() => console.log("success!"));
-                        }}>
-                        <div className="grid gap-4">
-                            <div className="grid w-full max-w-sm items-center gap-3">
-                                <Label htmlFor="paper">Choose a file to upload.</Label>
-                                    <Input id="paper-upload" accept="application/pdf" type="file" onChange={(e: ChangeEvent<HTMLInputElement>) => setFile((e.target as HTMLInputElement).files?.[0] || null)}/>
-                            </div>
+        <Toolbar title="Your Papers">
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button className="ml-auto">Upload Paper</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>Upload Paper</DialogTitle>
+                    </DialogHeader>
+                    <form onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                        e.preventDefault();
+                        uploadPaper().then(() => console.log("success!"));
+                    }}>
+                    <div className="grid gap-4">
+                        <div className="grid w-full max-w-sm items-center gap-3">
+                            <Label htmlFor="paper">Choose a file to upload.</Label>
+                                <Input id="paper-upload" accept="application/pdf" type="file" onChange={(e: ChangeEvent<HTMLInputElement>) => setFile((e.target as HTMLInputElement).files?.[0] || null)}/>
                         </div>
-                        <DialogFooter>
-                            <DialogClose asChild>
-                                <Button variant="outline">Cancel</Button>
-                            </DialogClose>
-                            <Button type="submit" disabled={!file} >Upload</Button>
-                        </DialogFooter>
-                        </form>
-                    </DialogContent>
-                </Dialog>
+                    </div>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <Button variant="outline">Cancel</Button>
+                        </DialogClose>
+                        <Button type="submit" disabled={!file} >Upload</Button>
+                    </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
         </Toolbar>
 
         <Grid>
