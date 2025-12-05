@@ -6,5 +6,6 @@ namespace PaperBuddy.Web.Tests;
 public abstract class TestBase(TestFixture fixture)
 {
     protected IServiceProvider Services => fixture.ServiceProvider;
-    protected string PdfPath => fixture.Configuration.GetValue<string>("PdfPath")!;
+    private string PdfPath => fixture.Configuration.GetValue<string>("PdfPath")!;
+    protected byte[] PdfFile => File.ReadAllBytes(PdfPath);
 }

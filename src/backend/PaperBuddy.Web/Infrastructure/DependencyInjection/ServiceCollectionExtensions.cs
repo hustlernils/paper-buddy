@@ -28,10 +28,11 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddServices(this IServiceCollection services)
+    public static IServiceCollection AddPaperBuddy(this IServiceCollection services)
     {
         services.AddScoped<IEmbeddingService, OllamaEmbeddingService>();
         services.AddScoped<ISummarizationService, OllamaSummarizationService>();
+        services.AddScoped<IPdfMetadataExtractor, PdfMetadataExtractor>();
 
         return services;
     }

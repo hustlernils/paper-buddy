@@ -24,9 +24,9 @@ public class TestFixture
         Configuration = configBuilder.Build();
 
         var services = new ServiceCollection();
-        
-        services.AddTransient<IPdfMetadataExtractor, PdfMetadataExtractor>();
 
+        services.AddPaperBuddy();
+        
         ServiceProvider = services.BuildServiceProvider();
     }
 }
