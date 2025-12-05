@@ -15,6 +15,8 @@ import {
     DialogClose} from "../components/ui/dialog";
 import {type ChangeEvent, type FormEvent, useEffect, useState} from "react";
 import Grid from '../components/layout/Grid'
+import Header from "../components/Header";
+import Toolbar from "../components/layout/Toolbar";
 
 interface GetPapersResponse
 {
@@ -77,36 +79,36 @@ function Papers() {
 
   return (
     <>
-        <div className='flex mb-10 justify-center align-center'>
-            <h1 className="text-5xl font-bold">Your Papers</h1>
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Button className="ml-auto">Upload Paper</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <DialogTitle>Upload Paper</DialogTitle>
-                    </DialogHeader>
-                    <form onSubmit={(e: FormEvent<HTMLFormElement>) => {
-                        e.preventDefault();
-                        uploadPaper().then(() => console.log("success!"));
-                    }}>
-                    <div className="grid gap-4">
-                        <div className="grid w-full max-w-sm items-center gap-3">
-                            <Label htmlFor="paper">Choose a file to upload.</Label>
-                                <Input id="paper-upload" accept="application/pdf" type="file" onChange={(e: ChangeEvent<HTMLInputElement>) => setFile((e.target as HTMLInputElement).files?.[0] || null)}/>
+        <Toolbar>
+            <Header label="Your Papers" />
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button className="ml-auto">Upload Paper</Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                            <DialogTitle>Upload Paper</DialogTitle>
+                        </DialogHeader>
+                        <form onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                            e.preventDefault();
+                            uploadPaper().then(() => console.log("success!"));
+                        }}>
+                        <div className="grid gap-4">
+                            <div className="grid w-full max-w-sm items-center gap-3">
+                                <Label htmlFor="paper">Choose a file to upload.</Label>
+                                    <Input id="paper-upload" accept="application/pdf" type="file" onChange={(e: ChangeEvent<HTMLInputElement>) => setFile((e.target as HTMLInputElement).files?.[0] || null)}/>
+                            </div>
                         </div>
-                    </div>
-                    <DialogFooter>
-                        <DialogClose asChild>
-                            <Button variant="outline">Cancel</Button>
-                        </DialogClose>
-                        <Button type="submit" disabled={!file} >Upload</Button>
-                    </DialogFooter>
-                    </form>
-                </DialogContent>
-            </Dialog>
-        </div>
+                        <DialogFooter>
+                            <DialogClose asChild>
+                                <Button variant="outline">Cancel</Button>
+                            </DialogClose>
+                            <Button type="submit" disabled={!file} >Upload</Button>
+                        </DialogFooter>
+                        </form>
+                    </DialogContent>
+                </Dialog>
+        </Toolbar>
 
         <Grid>
             {responseData && responseData.map((item: GetPapersResponse, cardIndex: number) => {
