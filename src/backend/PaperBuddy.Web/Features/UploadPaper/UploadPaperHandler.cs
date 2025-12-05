@@ -12,8 +12,6 @@ public class UploadPaperHandler(IDbConnection connection, IMessageBus messageBus
     
     public async Task<Guid> HandleAsync(UploadPaperRequest request, CancellationToken  cancellationToken)
     {
-        var paperId = Guid.NewGuid();
-
         _dbConnection.Open();
         using var transaction = _dbConnection.BeginTransaction();
 
@@ -29,14 +27,14 @@ public class UploadPaperHandler(IDbConnection connection, IMessageBus messageBus
                 @"INSERT INTO papers (id, uploaded_by, title, created_at)
                 VALUES (@Id, @UploadedBy, @Title, NOW())", paper);
 
-            await InsertPaperData(request.File, paperId);
+            await InsertPaperData(request.File, paper.Id);
 
-            await _bus.PublishAsync(new ExtractPaperInfoRequest(paperId), cancellationToken);
+            await _bus.PublishAsync(new ExtractPaperInfoRequest(paper.Id), cancellationToken);
             
             transaction.Commit();
             _dbConnection.Close();
 
-            return paperId;
+            return paper.Id;
         }
         catch (Exception e)
         {

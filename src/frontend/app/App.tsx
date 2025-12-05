@@ -83,7 +83,7 @@ function App() {
         <SidebarInset>
             <title>PaperBuddy</title>
 
-            <div className='flex mb-10'>
+            <div className='flex mb-10 justify-center'>
                 <h1 className="text-5xl font-bold">Your Papers</h1>
                             <Dialog>
                     <DialogTrigger asChild>
