@@ -117,7 +117,7 @@ function App() {
             <Grid>
                 {responseData && responseData.map((item: GetPapersResponse, cardIndex: number) => {
                     return (
-                        <Card className="p-6" key={`paper-${cardIndex}`}>
+                        <Card key={`paper-${cardIndex}`}>
                             <CardHeader>{item.title}</CardHeader>
                             <CardDescription>{item.authors}</CardDescription>
                             <Separator></Separator>
