@@ -19,15 +19,15 @@ public class UploadPaperHandler(IDbConnection connection, IMessageBus messageBus
         try
         {
             await _dbConnection.ExecuteAsync(
-                @"INSERT INTO papers (id, uploaded_by, created_at)
-                VALUES (@Id, @UploadedBy, NOW())", new
+                @"INSERT INTO papers (id, uploaded_by, title, created_at)
+                VALUES (@Id, @UploadedBy, @Title, NOW())", new
                 {
                     Id = paperId,
                     UploadedBy = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a"),
                     Title = StripPdfExtension(request.File.FileName),
                 });
 
-            await AddPaperData(request.File, paperId);
+            await InsertPaperData(request.File, paperId);
 
             await _bus.PublishAsync(new ExtractPaperInfoRequest(paperId), cancellationToken);
             
@@ -43,7 +43,7 @@ public class UploadPaperHandler(IDbConnection connection, IMessageBus messageBus
         }
     }
 
-    private async Task AddPaperData(IFormFile file, Guid paperId)
+    private async Task InsertPaperData(IFormFile file, Guid paperId)
     {
         await using var ms = new MemoryStream();
         await file.CopyToAsync(ms);
