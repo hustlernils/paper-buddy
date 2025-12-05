@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import {
     Sidebar,
     SidebarContent,
@@ -10,19 +11,19 @@ import {
     SidebarTrigger,
 } from "./ui/sidebar"
 import { ModeToggle} from "./mode-toggle";
-import { FileText, MessageCircle } from "lucide-react";
+import { FileText, Folder } from "lucide-react";
 
 
 const items = [
     {
         title: "Your papers",
-        url: "#",
+        url: "/papers",
         icon: FileText
     },
     {
-        title: "Chat",
-        url: "#",
-        icon: MessageCircle
+        title: "Projects",
+        url: "/projects",
+        icon: Folder
     }
 ]
 
@@ -30,9 +31,9 @@ export function AppSidebar() {
     return (
         <Sidebar side="left" collapsible="icon">
             <SidebarHeader>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                     <ModeToggle/>
-                    <SidebarTrigger/>
+                    <SidebarTrigger />
                 </div>
             </SidebarHeader>
             <SidebarContent>
@@ -43,11 +44,11 @@ export function AppSidebar() {
                         <SidebarMenu>
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild>
-                                        <a href={item.url}>
+                                    <SidebarMenuButton asChild tooltip={item.title}>
+                                        <Link to={item.url}>
                                             <item.icon />
                                             <span>{item.title}</span>
-                                        </a>
+                                        </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}
