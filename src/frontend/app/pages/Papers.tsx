@@ -113,15 +113,14 @@ function Papers() {
             {responseData && responseData.map((item: GetPapersResponse, cardIndex: number) => {
                 return (
                     <Card key={`paper-${cardIndex}`}>
-                        <CardHeader>{item.title}</CardHeader>
-                        <CardDescription>{item.authors}</CardDescription>
+                        <CardHeader className="text-center">{item.title}</CardHeader>
+                        <CardDescription className="text-center">{item.authors}</CardDescription>
                         <Separator></Separator>
-                        {/* <div className="w-full flex flex-wrap gap-4 justify-center">
-                            <h2>Tags</h2>
-                            {item.tags.map((tag: string, index: number) => {
-                                return (<Badge key={`paper-${cardIndex}-tag-${index}`}>{tag}</Badge>)
-                            })}
-                        </div> */}
+                            <div className="flex px-2 flex-wrap gap-2 justify-start">
+                                <h2>Tags</h2>
+                                <Badge>Example tag</Badge>                                
+                                <Badge>tag</Badge>
+                            </div>
                     </Card>
                 )
             })}
