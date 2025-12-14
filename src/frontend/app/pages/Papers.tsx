@@ -59,7 +59,7 @@ const Papers = () => {
             </Toolbar>
 
             <Grid>
-                {papers && papers.map((item: GetPapersResponse, cardIndex: number) => {
+                {papers.map((item: GetPapersResponse, cardIndex: number) => {
                     return (
                         <Card key={`paper-${cardIndex}`}>
                             <CardHeader className="text-center">{item.title}</CardHeader>

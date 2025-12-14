@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { type GetPapersResponse } from "../types/api";
 
 export interface UsePapersResponse{
-    papers: GetPapersResponse[] | undefined, 
+    papers: GetPapersResponse[], 
     isLoading: boolean, 
     error: string | null, 
     uploadPaper: (file: File | null) => Promise<void>, 
@@ -10,7 +10,7 @@ export interface UsePapersResponse{
 }
 
 export const usePapers = (): UsePapersResponse => {
-    const [papers, setPapers] = useState<GetPapersResponse[]>();
+    const [papers, setPapers] = useState<GetPapersResponse[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
