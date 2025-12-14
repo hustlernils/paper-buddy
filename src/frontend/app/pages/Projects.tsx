@@ -19,15 +19,15 @@ import { useFetch } from "../hooks/useFetch";
 const Projects = () => {
     const [project, setProject] = useState<CreateProjectRequest>({title: ""})
     const [projects, setProjects] = useState<GetProjectsResponse[]>([])
-    const { makeRequest } = useFetch();
+    const { api } = useFetch();
 
     const fetchProjects = async () => {
-        const projectResponse = await makeRequest<GetProjectsResponse[]>('/projects', { method: 'GET' });
+        const projectResponse = await api.get<GetProjectsResponse[]>('/projects');
         setProjects(projectResponse);
     }
 
     const createProject = async () => {
-        const createProjectResponse = await makeRequest<string>('/projects', {method: 'POST', body: project})
+        const createProjectResponse = await api.post<string>('/projects', project)
         fetchProjects();
     }
 

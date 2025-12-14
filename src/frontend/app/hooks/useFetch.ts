@@ -1,10 +1,17 @@
 import { useState } from "react"
 
+export type ContentType = 'json' | 'form-data' | 'none'
+
 export interface ApiRequestOptions{
     method: 'GET' | 'POST'
     body?: any,
-    contentType?: 'json' | 'form-data' | 'none'
+    contentType?: ContentType
     headers?: Record<string, string>
+}
+
+export interface ApiClient {
+    get: <T>(path: string, headers?: Record<string, string>) => Promise<T>,
+    post: <T>(path: string, body?: unknown, contentType?: ContentType) => Promise<T>
 }
 
 export const useFetch = () => {
@@ -53,5 +60,20 @@ export const useFetch = () => {
         }
     }
 
-    return { isLoading, makeRequest }
+    const api: ApiClient = {
+        get: <T>(path: string, headers?: Record<string, string>) => 
+            makeRequest<T>(path,  { 
+                method: 'GET', 
+                headers: headers 
+            }),
+
+        post: <T>(path: string, body: unknown, contentType: ContentType = 'json') => 
+            makeRequest<T>(path,  { 
+                method: 'POST', 
+                body: body, 
+                contentType: contentType 
+            })
+    }
+
+    return { isLoading, api }
 }
