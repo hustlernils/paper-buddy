@@ -1,5 +1,7 @@
 using PaperBuddy.Web.Features.GetPapers;
 using PaperBuddy.Web.Features.UploadPaper;
+using PaperBuddy.Web.Features.GetProjects;
+using PaperBuddy.Web.Features.CreateProject;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,5 +44,7 @@ app.Services.UseMessageBus();
 
 app.MapUploadPaperEndpoint();
 app.MapGetPapersEndpoint();
+app.MapGetProjectsEndpoint();
+app.MapCreateProjectEndpoint();
 
 app.Run();
