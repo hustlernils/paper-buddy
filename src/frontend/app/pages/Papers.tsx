@@ -1,8 +1,7 @@
 import { Input } from "../components/ui/input"
 import { Label } from "../components/ui/label"
 import { Badge } from "../components/ui/badge"
-import { Card } from "../components/ui/card"
-import { CardDescription, CardHeader } from "../components/ui/card";
+import { Card, CardDescription, CardHeader } from "../components/ui/card"
 import { Separator } from "../components/ui/separator"
 import { Button } from "../components/ui/button"
 import {
@@ -23,7 +22,6 @@ const Papers = () => {
     const [file, setFile] = useState<File | null>(null);
     const { papers, isLoading, error, uploadPaper } = usePapers();
    
-
     return (
         <>
             {isLoading && <div>Loading...</div>}

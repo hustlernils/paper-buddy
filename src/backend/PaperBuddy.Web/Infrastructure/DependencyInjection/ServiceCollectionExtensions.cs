@@ -1,7 +1,9 @@
 using Npgsql;
 using System.Data;
 using PaperBuddy.Web.Common.Abstractions;
+using PaperBuddy.Web.Features.CreateProject;
 using PaperBuddy.Web.Features.GetPapers;
+using PaperBuddy.Web.Features.GetProjects;
 using PaperBuddy.Web.Features.UploadPaper;
 using PaperBuddy.Web.Infrastructure.Services;
 
@@ -24,6 +26,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<UploadPaperHandler>();
         services.AddScoped<GetPapersHandler>();
+        services.AddScoped<CreateProjectHandler>();
+        services.AddScoped<GetProjectsHandler>();
 
         return services;
     }
