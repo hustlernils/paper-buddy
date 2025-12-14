@@ -2,6 +2,7 @@ import { useEffect, useMemo, useReducer } from "react";
 import { type GetPapersResponse } from "../types/api";
 import { papersReducer } from "../reducers/papersReducer";
 import { createPapersActions } from '../actions/papersActions'
+import { useFetch } from "./useFetch";
 
 export interface UsePapersResponse{
     papers: GetPapersResponse[], 
@@ -15,6 +16,7 @@ export const usePapers = (): UsePapersResponse => {
 
     const [state, dispatch] = useReducer(papersReducer, { papers: [], isLoading: false, error: null})
     const { papers, isLoading, error } = state;
+    const { api, isLoading: apiLoading } = useFetch();
 
     const actions = useMemo(() => createPapersActions(dispatch), [dispatch]) 
     
@@ -22,16 +24,8 @@ export const usePapers = (): UsePapersResponse => {
         try {
             actions.fetchStart();
 
-            const response = await fetch('http://localhost:5009/papers', {
-                method: 'GET',
-            });
-
-            if (!response.ok) {
-                throw new Error("Error while fetching data!");
-            }
-
-            const data = await response.json();
-            actions.fetchSuccess(data);
+            const papersResponse = await api.get<GetPapersResponse[]>('/papers')
+            actions.fetchSuccess(papersResponse);
         } 
         catch (error) {
             actions.setError((error as Error).message)}
@@ -48,17 +42,7 @@ export const usePapers = (): UsePapersResponse => {
             const formData = new FormData();
             formData.append("file", file)
 
-            const response = await fetch('http://localhost:5009/papers/upload', {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (!response.ok) {
-                throw new Error("Error while uploading data!");
-            }
-
-            const data  = await response.json();
-            console.log(data);
+            const data = await api.post('/papers/upload', formData, 'form-data')
         }
         catch (error) {
             actions.setError((error as Error).message)
@@ -71,5 +55,5 @@ export const usePapers = (): UsePapersResponse => {
         fetchPapers();
     }, [])
 
-    return { papers, isLoading, error, uploadPaper, refetch: fetchPapers }
+    return { papers, isLoading: isLoading || apiLoading, error, uploadPaper, refetch: fetchPapers }
 }
