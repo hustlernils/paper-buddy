@@ -14,48 +14,20 @@ import { Input} from "../components/ui/input";
 import { type GetProjectsResponse, type CreateProjectRequest } from "../types/api";
 import Grid from '../components/layout/Grid'
 import { Card, CardDescription, CardHeader } from "../components/ui/card"
+import { useFetch } from "../hooks/useFetch";
 
 const Projects = () => {
-
     const [project, setProject] = useState<CreateProjectRequest>({title: ""})
     const [projects, setProjects] = useState<GetProjectsResponse[]>([])
+    const { makeRequest } = useFetch();
 
     const fetchProjects = async () => {
-        try {
-            const response = await fetch('http://localhost:5009/projects', {
-                method: 'GET',
-            });
-
-            if (!response.ok) {
-                throw new Error("Error while fetching data!");
-            }
-            
-            const data = await response.json();
-            setProjects(data)
-        } 
-        catch (error) {
-            console.log(error);
-        }
+        const projectResponse = await makeRequest<GetProjectsResponse[]>('/projects', { method: 'GET' });
+        setProjects(projectResponse);
     }
 
     const createProject = async () => {
-        try {
-            const response = await fetch('http://localhost:5009/projects', {
-                method: 'POST',
-                body: JSON.stringify(project),
-                headers:{
-                    "Content-Type": "application/json"
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error("Error while fetching data!");
-            }
-        } 
-        catch (error) {
-            console.log(error);
-        }
-
+        const createProjectResponse = await makeRequest<string>('/projects', {method: 'POST', body: project})
         fetchProjects();
     }
 
