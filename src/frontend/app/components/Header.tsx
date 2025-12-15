@@ -3,9 +3,9 @@ export interface HeaderProps{
 }
 
 const Header = ({ label } : HeaderProps) =>{
-    return (
-        <h1 className="text-xl font-bold">{label}</h1>
-    )
+  return (
+    <h1 className="text-xl font-bold">{label}</h1>
+  )
 }
 
 export default Header;

@@ -11,11 +11,11 @@ export interface GridProps{
 }
 
 const Grid = ( { children }: GridProps) => {
-    return(
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 2xl:grid-cols-6  gap-2">
-            {children}
-        </div>
-    ) 
+  return(
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 2xl:grid-cols-6  gap-2">
+      {children}
+    </div>
+  ) 
 } 
 
 export default Grid;

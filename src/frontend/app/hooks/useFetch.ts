@@ -15,65 +15,65 @@ export interface ApiClient {
 }
 
 export const useFetch = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const makeRequest = async <T>(path: string, options: ApiRequestOptions): Promise<T> => {
-        try {
-            setIsLoading(true);
+  const makeRequest = async <T>(path: string, options: ApiRequestOptions): Promise<T> => {
+    try {
+      setIsLoading(true);
 
-            // hardcoded for now
-            const BASE_URL = 'http://localhost:5009';
-            const contentType = options.contentType || 'json'; // Default to 'json'
-            const config: RequestInit = {
-                method: options.method,
-                headers: options.headers || {}
-            }
+      // hardcoded for now
+      const BASE_URL = 'http://localhost:5009';
+      const contentType = options.contentType || 'json'; // Default to 'json'
+      const config: RequestInit = {
+        method: options.method,
+        headers: options.headers || {}
+      }
 
-            if (options.body){
-                if(contentType === 'json'){
-                    config.headers =  {
-                        ...config.headers,
-                        "Content-Type": "application/json"
-                    }
-                    config.body = JSON.stringify(options.body)
-                }
-                else if (contentType === 'form-data'){
-                    config.body = options.body;
-                }
-            }
+      if (options.body){
+        if(contentType === 'json'){
+          config.headers =  {
+            ...config.headers,
+            "Content-Type": "application/json"
+          }
+          config.body = JSON.stringify(options.body)
+        }
+        else if (contentType === 'form-data'){
+          config.body = options.body;
+        }
+      }
 
-            const response = await fetch(`${BASE_URL}${path}`, config)
+      const response = await fetch(`${BASE_URL}${path}`, config)
 
-            if (!response.ok) {
-                throw new Error("Error while fetching data!");
-            }
+      if (!response.ok) {
+        throw new Error("Error while fetching data!");
+      }
             
-            const data = await response.json();        
-            return data;
-        } 
-        catch (error) {
-            console.log(error);
-            throw error;
-        }
-        finally{
-            setIsLoading(false);
-        }
+      const data = await response.json();        
+      return data;
+    } 
+    catch (error) {
+      console.log(error);
+      throw error;
     }
-
-    const api: ApiClient = {
-        get: <T>(path: string, headers?: Record<string, string>) => 
-            makeRequest<T>(path,  { 
-                method: 'GET', 
-                headers: headers 
-            }),
-
-        post: <T>(path: string, body: unknown, contentType: ContentType = 'json') => 
-            makeRequest<T>(path,  { 
-                method: 'POST', 
-                body: body, 
-                contentType: contentType 
-            })
+    finally{
+      setIsLoading(false);
     }
+  }
 
-    return { isLoading, api }
+  const api: ApiClient = {
+    get: <T>(path: string, headers?: Record<string, string>) => 
+      makeRequest<T>(path,  { 
+        method: 'GET', 
+        headers: headers 
+      }),
+
+    post: <T>(path: string, body: unknown, contentType: ContentType = 'json') => 
+      makeRequest<T>(path,  { 
+        method: 'POST', 
+        body: body, 
+        contentType: contentType 
+      })
+  }
+
+  return { isLoading, api }
 }

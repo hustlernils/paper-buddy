@@ -9,15 +9,15 @@ export interface ToolbarProps{
 
 const Toolbar = ({ title, children } : ToolbarProps) => {
 
-    return (
-        <div className="mb-4">
-            <div className='flex justify-between pb-4 items-center'>
-                {title && <Header label={title}/>}    
-                {children && <div className="flex gap-2">{children}</div>}
-            </div>    
-            <Separator/>
-        </div>
-    )    
+  return (
+    <div className="mb-4">
+      <div className='flex justify-between pb-4 items-center'>
+        {title && <Header label={title}/>}    
+        {children && <div className="flex gap-2">{children}</div>}
+      </div>    
+      <Separator/>
+    </div>
+  )    
 }
 
 export default Toolbar;

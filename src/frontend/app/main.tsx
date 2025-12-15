@@ -9,13 +9,13 @@ import { AppSidebar } from "./components/app-sidebar"
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-      <BrowserRouter>
-          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-              <SidebarProvider>
-                  <AppSidebar />
-                  <App />
-              </SidebarProvider>
-          </ThemeProvider>
-      </BrowserRouter>
+    <BrowserRouter>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <SidebarProvider>
+          <AppSidebar />
+          <App />
+        </SidebarProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   </StrictMode>,
 )

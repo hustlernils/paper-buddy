@@ -6,16 +6,16 @@ import Layout from './components/layout/Layout'
 
 function App() {
   return (
-      <SidebarInset>
-        <Layout>
-            <Routes>
-                <Route path="/" element={<Papers />} />
-                <Route path="/papers" element={<Papers />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="*" element={<div>Page not found</div>} />
-            </Routes>
-        </Layout>
-      </SidebarInset>
+    <SidebarInset>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Papers />} />
+          <Route path="/papers" element={<Papers />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="*" element={<div>Page not found</div>} />
+        </Routes>
+      </Layout>
+    </SidebarInset>
   )
 }
 
