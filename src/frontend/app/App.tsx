@@ -3,6 +3,7 @@ import { SidebarInset } from './components/ui/Sidebar'
 import Papers from './pages/Papers'
 import Projects from './pages/Projects'
 import Layout from './components/layout/Layout'
+import { ProjectDetails } from './pages/ProjectDetails'
 
 function App() 
 {
@@ -13,6 +14,7 @@ function App()
           <Route path="/" element={<Papers />} />
           <Route path="/papers" element={<Papers />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:id" element={<ProjectDetails/>}/>
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>
       </Layout>

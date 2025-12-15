@@ -15,10 +15,11 @@ import { type GetProjectsResponse } from "../types/api";
 import Grid from '../components/layout/Grid'
 import { Card, CardDescription, CardHeader } from "../components/ui/Card"
 import { useProjects } from "../hooks/useProjects";
+import { useNavigate } from "react-router-dom";
 
 const Projects = () => 
 {
-
+  const navigate = useNavigate();
   const { project, projects, createProject, handleProjectChange } = useProjects();
 
   return (
@@ -68,7 +69,7 @@ const Projects = () =>
         {projects.map((item: GetProjectsResponse, cardIndex: number) => 
         {
           return (
-            <Card key={`paper-${cardIndex}`}>
+            <Card key={`paper-${cardIndex}`} onClick={() => navigate(`/projects/${cardIndex}`)}>
               <CardHeader className="text-center">{item.title}</CardHeader>
               <CardDescription className="text-center">{item.description}</CardDescription>
             </Card>
