@@ -9,8 +9,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarTrigger,
-} from "./ui/sidebar"
-import { ModeToggle} from "./mode-toggle";
+} from "./ui/Sidebar"
+import { ModeToggle} from "./ModeToggle";
 import { FileText, Folder } from "lucide-react";
 
 
@@ -27,7 +27,8 @@ const items = [
   }
 ]
 
-export function AppSidebar() {
+export function AppSidebar() 
+{
   return (
     <Sidebar side="left" collapsible="icon">
       <SidebarHeader>

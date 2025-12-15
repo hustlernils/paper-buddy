@@ -8,8 +8,10 @@ interface PapersState{
     error: string | null
 }
 
-export const papersReducer = (state: PapersState, action: PapersAction): PapersState => {
-  switch (action.type) {
+export const papersReducer = (state: PapersState, action: PapersAction): PapersState => 
+{
+  switch (action.type) 
+  {
   case "FETCH_START":
     return {
       ...state,

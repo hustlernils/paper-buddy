@@ -21,6 +21,7 @@ export default defineConfig([
     },
     rules: {
       'indent': ['error', 2],
+      'brace-style': ['error', 'allman'],
     },
   },
 ])

@@ -1,5 +1,5 @@
 import type React from "react"
-import { Separator } from "../ui/separator"
+import { Separator } from "../ui/Separator"
 import Header from "../Header"
 
 export interface ToolbarProps{
@@ -7,7 +7,8 @@ export interface ToolbarProps{
     children?: React.ReactNode[] | React.ReactNode
 } 
 
-const Toolbar = ({ title, children } : ToolbarProps) => {
+const Toolbar = ({ title, children } : ToolbarProps) => 
+{
 
   return (
     <div className="mb-4">

@@ -10,15 +10,19 @@ export interface ApiRequestOptions{
 }
 
 export interface ApiClient {
-    get: <T>(path: string, headers?: Record<string, string>) => Promise<T>,
-    post: <T>(path: string, body?: unknown, contentType?: ContentType) => Promise<T>
+    get: <T>(path: string, headers?: Record<string, string>) => Promise<T | null>,
+    post: <T>(path: string, body?: unknown, contentType?: ContentType) => Promise<T | null>
 }
 
-export const useFetch = () => {
+export const useFetch = () => 
+{
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const makeRequest = async <T>(path: string, options: ApiRequestOptions): Promise<T> => {
-    try {
+  const makeRequest = async <T>(path: string, options: ApiRequestOptions): Promise<T | null> => 
+  {
+    try 
+    {
       setIsLoading(true);
 
       // hardcoded for now
@@ -29,33 +33,39 @@ export const useFetch = () => {
         headers: options.headers || {}
       }
 
-      if (options.body){
-        if(contentType === 'json'){
+      if (options.body)
+      {
+        if(contentType === 'json')
+        {
           config.headers =  {
             ...config.headers,
             "Content-Type": "application/json"
           }
           config.body = JSON.stringify(options.body)
         }
-        else if (contentType === 'form-data'){
+        else if (contentType === 'form-data')
+        {
           config.body = options.body;
         }
       }
 
       const response = await fetch(`${BASE_URL}${path}`, config)
 
-      if (!response.ok) {
+      if (!response.ok) 
+      {
         throw new Error("Error while fetching data!");
       }
             
       const data = await response.json();        
       return data;
     } 
-    catch (error) {
-      console.log(error);
-      throw error;
+    catch (error) 
+    {
+      setError((error as Error).message)
+      return null;
     }
-    finally{
+    finally
+    {
       setIsLoading(false);
     }
   }
@@ -75,5 +85,5 @@ export const useFetch = () => {
       })
   }
 
-  return { isLoading, api }
+  return { isLoading, error, api }
 }

@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
-import { ThemeProvider} from "./components/theme-provider.tsx";
-import { SidebarProvider } from "./components/ui/sidebar"
-import { AppSidebar } from "./components/app-sidebar"
+import { ThemeProvider} from "./components/ThemeProvider.tsx";
+import { SidebarProvider } from "./components/ui/Sidebar.tsx"
+import { AppSidebar } from "./components/AddSidebar.tsx"
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

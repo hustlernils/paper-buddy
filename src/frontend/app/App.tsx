@@ -1,10 +1,11 @@
 import { Routes, Route } from 'react-router-dom'
-import { SidebarInset } from './components/ui/sidebar'
+import { SidebarInset } from './components/ui/Sidebar'
 import Papers from './pages/Papers'
 import Projects from './pages/Projects'
 import Layout from './components/layout/Layout'
 
-function App() {
+function App() 
+{
   return (
     <SidebarInset>
       <Layout>

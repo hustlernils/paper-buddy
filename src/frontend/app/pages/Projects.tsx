@@ -6,17 +6,18 @@ import {
   DialogTitle,
   DialogHeader,
   DialogFooter,
-  DialogClose} from "../components/ui/dialog";
-import { Button } from "../components/ui/button";
+  DialogClose} from "../components/ui/Dialog";
+import { Button } from "../components/ui/Button";
 import React, { type FormEvent } from "react";
-import { Label } from "../components/ui/label";
-import { Input} from "../components/ui/input";
+import { Label } from "../components/ui/Label";
+import { Input} from "../components/ui/Input";
 import { type GetProjectsResponse } from "../types/api";
 import Grid from '../components/layout/Grid'
-import { Card, CardDescription, CardHeader } from "../components/ui/card"
+import { Card, CardDescription, CardHeader } from "../components/ui/Card"
 import { useProjects } from "../hooks/useProjects";
 
-const Projects = () => {
+const Projects = () => 
+{
 
   const { project, projects, createProject, handleProjectChange } = useProjects();
 
@@ -31,7 +32,8 @@ const Projects = () => {
             <DialogHeader>
               <DialogTitle>New Project</DialogTitle>
             </DialogHeader>
-            <form onSubmit={(e: FormEvent<HTMLFormElement>) => {
+            <form onSubmit={(e: FormEvent<HTMLFormElement>) => 
+            {
               e.preventDefault();
               createProject();
             }}>
@@ -63,7 +65,8 @@ const Projects = () => {
         </Dialog>
       </Toolbar>
       <Grid>
-        {projects.map((item: GetProjectsResponse, cardIndex: number) => {
+        {projects.map((item: GetProjectsResponse, cardIndex: number) => 
+        {
           return (
             <Card key={`paper-${cardIndex}`}>
               <CardHeader className="text-center">{item.title}</CardHeader>

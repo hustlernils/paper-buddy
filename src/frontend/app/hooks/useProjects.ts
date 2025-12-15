@@ -10,26 +10,34 @@ export interface UseProjectsResponse{
     refetch: () => Promise<void>
 }
 
-export const useProjects = (): UseProjectsResponse => {
+export const useProjects = (): UseProjectsResponse => 
+{
   const [project, setProject] = useState<CreateProjectRequest>({title: ""})
   const [projects, setProjects] = useState<GetProjectsResponse[]>([])
   const { api } = useFetch();
 
-  const fetchProjects = async () => {
+  const fetchProjects = async () => 
+  {
     const projectResponse = await api.get<GetProjectsResponse[]>('/projects');
-    setProjects(projectResponse);
+    if (projectResponse)
+    {
+      setProjects(projectResponse);
+    }  
   }
 
-  const createProject = async () => {
-    const createProjectResponse = await api.post<string>('/projects', project)
+  const createProject = async () => 
+  {
+    await api.post<string>('/projects', project)
     fetchProjects();
   }
 
-  useEffect(() => {
+  useEffect(() => 
+  {
     fetchProjects();
   }, [])
 
-  const handleProjectChange = (key: string, value: string) =>{
+  const handleProjectChange = (key: string, value: string) =>
+  {
     setProject({
       ...project,
       [key]: value
