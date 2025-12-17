@@ -1,3 +1,7 @@
 namespace PaperBuddy.Web.Features.GetChats;
 
-public class ChatResponse(Guid Id, DateTime CreatedAt);
+public class ChatResponse()
+{
+    public Guid Id { get; set; }
+    public DateTime CreatedAt { get; set; }
+}

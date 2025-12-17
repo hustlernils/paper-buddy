@@ -9,14 +9,14 @@ public class GetChatsHandler(IDbConnection connection) : RequestHandler<GetChats
 {
     protected override async Task<List<ChatResponse>> HandleAsync(GetChatsRequest request, CancellationToken cancellationToken)
     {
-        var sql = "SELECT  (id, created_at) FROM chats WHERE parent_id = @ParentId AND parent_type = @ParentType AND user_id = @UserId;";
+        var sql = "SELECT  id, created_at AS CreatedAt FROM chats WHERE parent_id = @ParentId AND UPPER(parent_type) = UPPER(@ParentType) AND user_id = @UserId;";
 
-        var result = (await Database.QueryAsync<Chat>(sql, new
+        var result = await Database.QueryAsync<ChatResponse>(sql, new
         {
             ParentId = request.ParentId,
             ParentType = request.ParentType,
             UserId = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a")
-        })).Select(c => new ChatResponse(c.Id, c.CreatedAt));
+        });
         
         return result.ToList();
     }

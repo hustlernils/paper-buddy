@@ -32,7 +32,7 @@ export const ProjectDetails = () => {
 
     const createChat = async () => {
         await api.post("/chats", {
-            parentType: "project",
+            parentType: "Project",
             parentId: id
         })
         fetchChats()
@@ -40,8 +40,7 @@ export const ProjectDetails = () => {
 
     useEffect(() => {
         fetchChats()
-    }, [])    
-
+    }, [])
 
     return(
         <>
@@ -50,7 +49,9 @@ export const ProjectDetails = () => {
         </Toolbar>
         <h1>Your chats</h1>
         {chats.map((chat) => {
+            return (
             <div>{chat.createdAt}</div>
+            )
         })}
         </>
     )
