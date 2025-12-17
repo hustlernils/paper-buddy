@@ -2,8 +2,9 @@ using PaperBuddy.Web.Domain;
 
 namespace PaperBuddy.Web.Features.GetChatMessages;
 
-public record GetChatMessagesResponse(
-    string Role,
-    string Content,
-    DateTime CreatedAt
-);
+public class GetChatMessagesResponse
+{
+    public string Role { get; set; }
+    public string Content { get; set; }
+    public DateTime CreatedAt { get; set; }
+}

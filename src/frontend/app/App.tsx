@@ -14,7 +14,7 @@ function App()
           <Route path="/" element={<Papers />} />
           <Route path="/papers" element={<Papers />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/projects/:id" element={<ProjectDetails/>}/>
+          <Route path="/projects/:projectId" element={<ProjectDetails/>}/>
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>
       </Layout>

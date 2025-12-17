@@ -17,7 +17,7 @@ public class AddChatMessageHandler(IDbConnection connection) : RequestHandler<Ad
             UserId = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a")
         };
 
-        string sql = "INSERT id, created_at, content, role, chat_id, user_id INTO chat_messages VALUES " +
+        string sql = "INSERT INTO chat_messages (id, created_at, content, role, chat_id, user_id) VALUES " +
                      "(@Id, @CreatedAt, @Content, @Role, @ChatId, @UserId);";
 
         await Database.ExecuteAsync(sql, new
