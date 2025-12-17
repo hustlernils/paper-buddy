@@ -15,14 +15,17 @@ export const ChatInput = ({ onSubmit }: ChatInputProps) =>
     setMessage(e.target.value)
   }
 
+  const handleSubmit = (e : React.FormEvent) =>
+  {
+    e.preventDefault()
+    onSubmit(message)
+    setMessage("")
+  }
+
   return(
-    <form onSubmit={(e : React.FormEvent) => 
-    {
-      e.preventDefault()
-      onSubmit(message)
-    }}>
-      <Input value={message} onChange={handleChange}></Input>
-      <Button role="submit">Send</Button>
+    <form className="flex flex-row gap-2" onSubmit={handleSubmit}>
+      <Input className="flex-6" value={message} onChange={handleChange}></Input>
+      <Button className="flex-1" role="submit">Send</Button>
     </form>
   )
 }

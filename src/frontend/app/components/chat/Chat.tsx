@@ -1,5 +1,6 @@
 import { type ChatMessageResponse } from "../../pages/ProjectDetails"
 import { ChatInput } from "./ChatInput"
+import { ChatMessages } from "./ChatMessages"
 
 interface ChatProps{
     id: string,
@@ -7,18 +8,12 @@ interface ChatProps{
     onSubmit: (content: string) => void
 }
 
-export const Chat = ( { id, messages, onSubmit }: ChatProps) => 
+export const Chat = ( { messages, onSubmit }: ChatProps) => 
 {
 
   return (
     <>
-      <div>{`This is the chat for id ${id}`}</div>
-      {messages.map((message: ChatMessageResponse, index: number) => 
-      {
-        return(
-          <h1 key={index}>{message.content}</h1>
-        )
-      })}
+      <ChatMessages messages={messages}/>
       <ChatInput onSubmit={onSubmit} />
     </>
   )
