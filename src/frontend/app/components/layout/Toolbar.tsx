@@ -7,7 +7,7 @@ export interface ToolbarProps{
     children?: React.ReactNode[] | React.ReactNode
 } 
 
-const Toolbar = ({ title, children } : ToolbarProps) => 
+export const Toolbar = ({ title, children } : ToolbarProps) => 
 {
 
   return (
@@ -20,5 +20,3 @@ const Toolbar = ({ title, children } : ToolbarProps) =>
     </div>
   )    
 }
-
-export default Toolbar;

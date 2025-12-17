@@ -1,7 +1,9 @@
+using PaperBuddy.Web.Features.CreateChat;
 using PaperBuddy.Web.Features.GetPapers;
 using PaperBuddy.Web.Features.UploadPaper;
 using PaperBuddy.Web.Features.GetProjects;
 using PaperBuddy.Web.Features.CreateProject;
+using PaperBuddy.Web.Features.GetChats;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,5 +48,7 @@ app.MapUploadPaperEndpoint();
 app.MapGetPapersEndpoint();
 app.MapGetProjectsEndpoint();
 app.MapCreateProjectEndpoint();
+app.MapGetChatsEndpoint();
+app.MapCreateChatEndpoint();
 
 app.Run();

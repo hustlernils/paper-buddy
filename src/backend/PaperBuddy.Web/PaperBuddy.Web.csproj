@@ -19,4 +19,8 @@
     <ProjectReference Include="..\PaperBuddy.MessageBus\PaperBuddy.MessageBus.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\CreateChat\" />
+  </ItemGroup>
+
 </Project>

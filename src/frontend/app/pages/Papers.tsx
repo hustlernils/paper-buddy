@@ -14,7 +14,7 @@ import {
   DialogClose} from "../components/ui/Dialog";
 import {type ChangeEvent, type FormEvent, useState} from "react";
 import Grid from '../components/layout/Grid'
-import Toolbar from "../components/layout/Toolbar";
+import { Toolbar } from "../components/layout/Toolbar";
 import { usePapers } from "../hooks/usePapers";
 import { type GetPapersResponse } from "../types/api";
 

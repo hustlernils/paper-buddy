@@ -7,7 +7,7 @@ public abstract class RequestHandler<TRequest, TResponse>(IDbConnection connecti
 {
     protected readonly IDbConnection Database = connection;
 
-    public async Task<TResponse> Execute(TRequest request)
+    public async Task<TResponse> Execute(TRequest request, CancellationToken  cancellationToken)
     {
         try
         {
@@ -16,7 +16,7 @@ public abstract class RequestHandler<TRequest, TResponse>(IDbConnection connecti
                 Database.Open();
             }
 
-            return await HandleAsync(request);
+            return await HandleAsync(request, cancellationToken);
         }
         finally
         {
@@ -27,5 +27,5 @@ public abstract class RequestHandler<TRequest, TResponse>(IDbConnection connecti
         }
     }
 
-    public abstract Task<TResponse> HandleAsync(TRequest request);
+    protected abstract Task<TResponse> HandleAsync(TRequest request, CancellationToken cancellationToken);
 }

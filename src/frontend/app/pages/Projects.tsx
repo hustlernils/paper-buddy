@@ -1,4 +1,4 @@
-import Toolbar from "../components/layout/Toolbar";
+import { Toolbar } from "../components/layout/Toolbar";
 import {
   Dialog,
   DialogTrigger,
@@ -69,7 +69,7 @@ const Projects = () =>
         {projects.map((item: GetProjectsResponse, cardIndex: number) => 
         {
           return (
-            <Card key={`paper-${cardIndex}`} onClick={() => navigate(`/projects/${cardIndex}`)}>
+            <Card key={`paper-${cardIndex}`} onClick={() => navigate(`/projects/${item.id}`)}>
               <CardHeader className="text-center">{item.title}</CardHeader>
               <CardDescription className="text-center">{item.description}</CardDescription>
             </Card>
