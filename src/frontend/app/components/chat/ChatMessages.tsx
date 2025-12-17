@@ -1,4 +1,5 @@
 import { type ChatMessageResponse } from "../../pages/ProjectDetails"
+import { ChatMessage } from "./ChatMessage"
 
 interface ChatMessagesProps{
     messages: ChatMessageResponse[],
@@ -6,13 +7,12 @@ interface ChatMessagesProps{
 
 export const ChatMessages = ( { messages }: ChatMessagesProps) => 
 {
-
   return (
-    <div className="h-96 overflow-auto">
+    <div className="h-full overflow-auto pb-32 flex flex-col">
       {messages.map((message: ChatMessageResponse, index: number) => 
       {
         return(
-          <h1 key={index}>{message.content}</h1>
+          <ChatMessage key={index} content={message.content} role={message.role}/>
         )
       })}
     </div>

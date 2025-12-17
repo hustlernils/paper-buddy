@@ -9,7 +9,7 @@ public class GetChatMessagesHandler(IDbConnection connection) : RequestHandler<G
 {
     protected override async Task<List<GetChatMessagesResponse>> HandleAsync(GetChatMessagesRequest request, CancellationToken cancellationToken)
     {
-        string sql = "SELECT UPPER(role), content, created_at FROM chat_messages " +
+        string sql = "SELECT UPPER(role) as Role, content, created_at as CreatedAt FROM chat_messages " +
                      "WHERE  user_id = @UserId and chat_id = @ChatId;";
         
         var result = await Database.QueryAsync<GetChatMessagesResponse>(sql, new

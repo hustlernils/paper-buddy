@@ -23,9 +23,11 @@ export const ChatInput = ({ onSubmit }: ChatInputProps) =>
   }
 
   return(
-    <form className="flex flex-row gap-2" onSubmit={handleSubmit}>
-      <Input className="flex-6" value={message} onChange={handleChange}></Input>
-      <Button className="flex-1" role="submit">Send</Button>
-    </form>
+    <div className="absolute bottom-0 left-0 right-0 bg-background border-t pt-4">
+      <form className="flex flex-row gap-2 max-w-4xl mx-auto" onSubmit={handleSubmit}>
+        <Input className="flex-1" value={message} onChange={handleChange}></Input>
+        <Button type="submit">Send</Button>
+      </form>
+    </div>
   )
 }

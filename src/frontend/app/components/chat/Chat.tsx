@@ -12,9 +12,9 @@ export const Chat = ( { messages, onSubmit }: ChatProps) =>
 {
 
   return (
-    <>
+    <div className="relative h-[calc(100vh-8rem)]">
       <ChatMessages messages={messages}/>
       <ChatInput onSubmit={onSubmit} />
-    </>
+    </div>
   )
 }
