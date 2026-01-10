@@ -7,7 +7,7 @@ public abstract class RequestHandler<TRequest, TResponse>(IDbConnection connecti
 {
     protected readonly IDbConnection Database = connection;
 
-    public async Task<TResponse> Execute(TRequest request, CancellationToken  cancellationToken)
+    public virtual async Task<TResponse> Execute(TRequest request, CancellationToken  cancellationToken)
     {
         try
         {
@@ -17,6 +17,10 @@ public abstract class RequestHandler<TRequest, TResponse>(IDbConnection connecti
             }
 
             return await HandleAsync(request, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            throw; // wrap in a custom exception later 
         }
         finally
         {

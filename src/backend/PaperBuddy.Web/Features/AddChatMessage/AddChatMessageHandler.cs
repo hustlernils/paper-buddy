@@ -2,34 +2,37 @@ using System.Data;
 using Dapper;
 using PaperBuddy.Web.Common;
 using PaperBuddy.Web.Domain;
+using PaperBuddy.Web.Infrastructure.Services;
 
 namespace PaperBuddy.Web.Features.AddChatMessage;
 
-public class AddChatMessageHandler(IDbConnection connection) : RequestHandler<AddChatMessageRequest, AddChatMessageResponse>(connection)
+public class AddChatMessageHandler(IDbConnection connection, ChatService chatService) : TransactionRequestHandler<AddChatMessageRequest, AddChatMessageResponse>(connection)
 {
     protected override async Task<AddChatMessageResponse> HandleAsync(AddChatMessageRequest request, CancellationToken cancellationToken)
     {
-        var message = new ChatMessage()
+        var userMessage = new ChatMessage()
         {
             Content = request.Content,
             Role = request.Role,
             ChatId = request.ChatId,
             UserId = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a")
         };
+
+        // TODO: query existing messages and resend them to the LLM for context
         
+        var systemAnswer = await chatService.GetAnswerAsync(userMessage.Content);
         var systemMessage = new ChatMessage()
         {
-            Content = "This is a dummy answer.",
+            Content = systemAnswer,
             Role = MessageRole.System,
             ChatId = request.ChatId,
             UserId = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a")
         };
         
-        await InsertMessage(message);
+        await InsertMessage(userMessage);
         await InsertMessage(systemMessage);
-
         
-        return new AddChatMessageResponse(message.Id);
+        return new AddChatMessageResponse(userMessage.Id);
     }
 
     private async Task InsertMessage(ChatMessage message)

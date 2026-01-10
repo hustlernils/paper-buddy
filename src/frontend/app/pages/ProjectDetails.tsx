@@ -79,11 +79,11 @@ export const ProjectDetails = () =>
     setActiveChat(id)
   }
 
-  const sendMessage = (content: string) =>
+  const sendMessage = async (content: string) =>
   {
     if(activeChat)
     {
-      api.post(`/chats/${activeChat}/messages`, { content: content})
+      await api.post(`/chats/${activeChat}/messages`, { content: content})
       fetchChatMessages(activeChat)
     }
 

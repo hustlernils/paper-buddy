@@ -27,6 +27,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddPostgres(builder.Configuration);
 builder.Services.AddHandlers();
+builder.Services.AddPaperBuddy();
+
 builder.Services.AddMessageBus(config =>
 {
     config.AddConsumer<SummarizePaperHandler>();
