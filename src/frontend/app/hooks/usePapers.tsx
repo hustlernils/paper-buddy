@@ -12,7 +12,6 @@ export interface UsePapersResponse{
 
 export const usePapers = (): UsePapersResponse => 
 {
-
   const [state, dispatch] = useReducer(papersReducer, { papers: [], isLoading: false, error: null})
   const { papers } = state;
   const { api } = useFetch();
