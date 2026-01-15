@@ -3,6 +3,7 @@ import { Button } from "../components/ui/Button";
 import { Toolbar } from "../components/layout/Toolbar";
 import { useProjects } from "../hooks/useProjects";
 import { Chat } from "../components/chat/Chat";
+import { ChatList } from "../components/chat/ChatList";
 import { useChats } from "../hooks/useChats";
 
 export const ProjectDetails = () => 
@@ -32,15 +33,7 @@ export const ProjectDetails = () =>
       </Toolbar>
       {activeChat 
         ? <Chat id={activeChat} messages={chatMessages} onSubmit={sendChatMessage}></Chat>
-        : chats.map((chat, index) => 
-        {
-          return (
-            <div key={index} onClick={() => 
-            {
-              openChat(index)
-            }}>{chat.createdAt}</div>
-          )
-        })
+        : <ChatList chats={chats} openChat={openChat}/>
       }
     </>
   )

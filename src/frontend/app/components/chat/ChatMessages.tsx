@@ -1,4 +1,4 @@
-import { type ChatMessageResponse } from "../../pages/ProjectDetails"
+import { type ChatMessageResponse } from "../../types/api"
 import { ChatMessage } from "./ChatMessage"
 
 interface ChatMessagesProps{

@@ -1,5 +1,5 @@
-import { type ChatMessageResponse } from "../../pages/ProjectDetails"
-import { ChatInput } from "./ChatInput"
+import { type ChatMessageResponse } from "../../types/api"
+import { ChatInput } from "./ChatInput" 
 import { ChatMessages } from "./ChatMessages"
 
 interface ChatProps{
