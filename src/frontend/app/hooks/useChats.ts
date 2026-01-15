@@ -1,13 +1,12 @@
-import { type GetProjectsResponse, type CreateProjectRequest } from "../types/api"
 import { useState, useEffect } from "react"
 import { useFetch } from "./useFetch"
 import { type ParentType } from "../types/api"
-import { type ChatResponse, type ChatMessageResponse, type CreateChatRequest } from "../types/api"
+import { type ChatResponse, type ChatMessageResponse } from "../types/api"
 
 
 export interface UseChatsResponse {
   chats: ChatResponse[]
-  activeChat: string
+  activeChat: string | null
   chatMessages: ChatMessageResponse[]
   fetchChats: (parentId: string, parentType: ParentType) => void
   createChat: (parentId: string, parentType: ParentType) => void

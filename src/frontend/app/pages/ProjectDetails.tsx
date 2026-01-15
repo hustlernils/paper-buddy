@@ -8,10 +8,10 @@ import { useChats } from "../hooks/useChats";
 export const ProjectDetails = () => 
 {
   const { projectId } = useParams<{projectId: string}>(); 
-  const { projects } = useProjects();
+  const { getCurrentProject } = useProjects();
   const { chats, activeChat, chatMessages, createChat, setActiveChat, sendChatMessage } = useChats(projectId, 'project');
 
-  const currentProject = projects.find(p => p.id === projectId)
+  const currentProject = getCurrentProject(projectId)
 
   const openChat = (index: number) => 
   {
