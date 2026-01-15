@@ -10,7 +10,7 @@ export const ProjectDetails = () =>
 {
   const { projectId } = useParams<{projectId: string}>(); 
   const { getCurrentProject } = useProjects();
-  const { chats, activeChat, chatMessages, createChat, setActiveChat, sendChatMessage } = useChats(projectId, 'project');
+  const { chats, activeChat, chatMessages, createChat, setActiveChat, sendChatMessage } = useChats(projectId, 'Project');
 
   const currentProject = getCurrentProject(projectId)
 
@@ -22,7 +22,7 @@ export const ProjectDetails = () =>
 
   const handleCreateChat = () => {
     if (projectId){
-      createChat(projectId, 'project')
+      createChat(projectId, 'Project')
     }   
   }
 

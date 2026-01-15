@@ -26,7 +26,7 @@ export const useChats = (parentId : string | undefined, parentType: ParentType):
     if (parentId){
       fetchChats(parentId, parentType)
     }
-  }, [])
+  }, [parentId])
 
   useEffect(() => 
   {
@@ -41,6 +41,7 @@ export const useChats = (parentId : string | undefined, parentType: ParentType):
     const chatsResponse = await api.get<ChatResponse[]>(`/chats/${parentId}?parentType=${parentType}`)
     if (chatsResponse)
     {
+      console.log(chatsResponse)
       setChats(chatsResponse)
     }
   }

@@ -16,7 +16,7 @@ export interface CreateProjectRequest{
     description?: string
 }
 
-export type ParentType = "project" | "paper"
+export type ParentType = "Project" | "Paper"
 
 export interface ChatResponse {
     id: string,
