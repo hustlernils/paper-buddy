@@ -1,17 +1,11 @@
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useChats } from "../hooks/useChats";
 import { useEffect } from "react";
 import { Chat } from "../components/chat/Chat";
-import { type ParentType } from "../types/api";
-
 export const ChatPage = () =>{
-    const { chatId } = useParams<{chatId: string}>(); 
-    const [searchParams] = useSearchParams();
+    const { chatId } = useParams<{chatId: string}>();
 
-    const parentType = searchParams.get("parentType") as ParentType
-    const parentId = searchParams.get("parentId")
-
-    const { activeChat, setActiveChat, chatMessages, sendChatMessage} = useChats(parentId, parentType);
+    const { activeChat, setActiveChat, chatMessages, sendChatMessage} = useChats();
     
     useEffect(() =>{
       if(chatId){

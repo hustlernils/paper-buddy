@@ -14,7 +14,7 @@ export const ProjectChats = ( { projectId }: ProjectChatsProps) => {
   const openChat = (index: number) => 
   {
     const chatId = chats[index].id;
-    navigate(`/chats/${chatId}?parentType=Project&parentId=${projectId}`)
+    navigate(`/chats/${chatId}`)
   }
 
     return (

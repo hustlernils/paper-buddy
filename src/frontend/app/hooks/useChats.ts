@@ -3,7 +3,6 @@ import { useFetch } from "./useFetch"
 import { type ParentType } from "../types/api"
 import { type ChatResponse, type ChatMessageResponse } from "../types/api"
 
-
 export interface UseChatsResponse {
   chats: ChatResponse[]
   activeChat: string | null
@@ -14,7 +13,7 @@ export interface UseChatsResponse {
   sendChatMessage: (content: string) => void
 }
 
-export const useChats = (parentId : string | undefined | null, parentType: ParentType | null): UseChatsResponse => 
+export const useChats = (parentId?: string | undefined | null, parentType?: ParentType | null): UseChatsResponse => 
 {
   const { api } = useFetch();
   const [chats, setChats] = useState<ChatResponse[]>([]);
