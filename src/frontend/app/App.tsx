@@ -4,6 +4,7 @@ import Papers from './pages/Papers'
 import Projects from './pages/Projects'
 import Layout from './components/layout/Layout'
 import { ProjectDetails } from './pages/ProjectDetails/ProjectDetails'
+import { ChatPage } from './pages/ChatPage'
 
 function App() 
 {
@@ -15,6 +16,7 @@ function App()
           <Route path="/papers" element={<Papers />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:projectId" element={<ProjectDetails/>}/>
+          <Route path="/chats/:chatId" element={<ChatPage/>}/>
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>
       </Layout>

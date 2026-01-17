@@ -8,13 +8,13 @@ import type React from "react";
 
 export interface GridProps{
     children: React.ReactNode[] | React.ReactNode
-    style: string
+    style?: string
 }
 
 export const Grid = ( { children, style }: GridProps) => 
 {
   return(
-    <div className={`grid grid-flow-col grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 2xl:grid-cols-6 grid-rows-3 gap-2 ${style}`}>
+    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 2xl:grid-cols-6 gap-2 ${style}`}>
       {children}
     </div>
   ) 

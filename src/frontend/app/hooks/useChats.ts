@@ -14,7 +14,7 @@ export interface UseChatsResponse {
   sendChatMessage: (content: string) => void
 }
 
-export const useChats = (parentId : string | undefined, parentType: ParentType): UseChatsResponse => 
+export const useChats = (parentId : string | undefined | null, parentType: ParentType | null): UseChatsResponse => 
 {
   const { api } = useFetch();
   const [chats, setChats] = useState<ChatResponse[]>([]);
@@ -23,7 +23,7 @@ export const useChats = (parentId : string | undefined, parentType: ParentType):
 
   useEffect(() => 
   {
-    if (parentId){
+    if (parentId && parentType){
       fetchChats(parentId, parentType)
     }
   }, [parentId])

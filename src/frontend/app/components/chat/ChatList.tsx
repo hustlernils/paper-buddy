@@ -14,7 +14,7 @@ interface ChatItemProps {
 
 const ChatItem = ( {chat, onClick}: ChatItemProps) => {
   return (
-  <div className="flex w-full max-w-md flex-col gap-6" onClick={onClick}>
+  <div className="flex w-full flex-col gap-6" onClick={onClick}>
         <Item variant="outline">
           <ItemContent>
             <ItemTitle>{`There is no title yet, so here is an id: ${chat.id}`}</ItemTitle>

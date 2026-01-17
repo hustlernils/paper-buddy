@@ -49,8 +49,8 @@ export const ProjectDetails = () =>
       <Toolbar title={currentProject?.title}>
         <Button onClick={() => handleCreateChat()}>New Chat</Button>
       </Toolbar>
-        <Grid style="">
-          <GridItem className="col-span-2 row-span-1 row-1">
+        <Grid>
+          <GridItem className="row-start-1 col-span-3 row-span-1">
             <Card>
               <CardHeader>Notes</CardHeader>
               <ul className="list-disc pl-5">
@@ -64,7 +64,7 @@ export const ProjectDetails = () =>
               </div>
             </Card>
           </GridItem>
-          <GridItem className="col-span-2 row-span-1 row-1">
+          <GridItem className="col-span-3 row-span-2 row-start-1">
             <Card>
               <CardHeader>Related Papers</CardHeader>
               <CardDescription>
@@ -86,7 +86,7 @@ export const ProjectDetails = () =>
             </CardContent>
           </Card>
           </GridItem>
-          <GridItem className="row-2 col-span-full">
+          <GridItem className="row-start-2 col-span-3">
             <ProjectChats projectId={projectId}/>
           </GridItem>      
       </Grid>
