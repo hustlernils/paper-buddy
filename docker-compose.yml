@@ -1,0 +1,15 @@
+# database
+include:
+  - ./infra/docker-compose.yml
+
+services:
+  api:
+    image: paper-buddy-api:latest
+    container_name: paper-buddy-api
+    build: ./src/backend
+    ports:
+      - "5009:8080"
+    volumes:
+      - ./src/backend/PaperBuddy.Web/appsettings.Docker.json:/app/appsettings.json
+    depends_on:
+      - postgres
