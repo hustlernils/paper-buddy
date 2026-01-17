@@ -12,7 +12,7 @@ import React, { type FormEvent } from "react";
 import { Label } from "../components/ui/Label";
 import { Input} from "../components/ui/Input";
 import { type GetProjectsResponse } from "../types/api";
-import Grid from '../components/layout/Grid'
+import { Grid } from '../components/layout/Grid'
 import { Card, CardDescription, CardHeader } from "../components/ui/Card"
 import { useProjects } from "../hooks/useProjects";
 import { useNavigate } from "react-router-dom";
