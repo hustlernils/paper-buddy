@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useReducer } from "react";
-import { type GetPapersResponse } from "../types/api";
+import { type GetPapersResponse, type GetPaperDetailsResponse } from "../types/api";
 import { papersReducer } from "../reducers/papersReducer";
 import { createPapersActions } from '../actions/papersActions'
 import { useFetch } from "./useFetch";
@@ -36,6 +36,24 @@ export const usePapers = (): UsePapersResponse =>
       actions.setError((error as Error).message)
     }
   };
+
+  const fetchPaperDetails = async (paperId: string) => {
+    try
+    {
+      actions.fetchStart();
+
+      const paperDetailsResponse = await api.get<GetPaperDetailsResponse>(`/papers/${paperId}`)
+
+      if (paperDetailsResponse)
+      {
+        actions.fetchSuccess(paperDetailsResponse);
+      }
+    }
+    catch (error)
+    {
+      actions.setError((error as Error).message)
+    }
+  }
 
   const uploadPaper = async (file: File | null) => 
   {

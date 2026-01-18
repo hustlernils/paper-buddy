@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom"
 import { Button } from "../../components/ui/Button";
 import { Toolbar } from "../../components/layout/Toolbar";
 import { useProjects } from "../../hooks/useProjects";
-
 import { Card, CardHeader, CardDescription, CardContent } from "../../components/ui/Card";
 import { Input } from "../../components/ui/Input";
 import { Label } from "../../components/ui/Label";

@@ -7,11 +7,16 @@ public class GetPaperByIdHandler(IDbConnection connection)
 {
     private readonly IDbConnection _dbConnection = connection;
 
-    public async Task<PaperDetails> HandleAsync(GetPaperByIdRequest request, CancellationToken cancellationToken)
+    public async Task<GetPaperDetailsResponse?> HandleAsync(GetPaperByIdRequest request, CancellationToken cancellationToken)
     {
-        // TODO: Implement DB query to fetch PaperDetails by request.PaperId
-        // Example: var paper = await _dbConnection.QuerySingleOrDefaultAsync<PaperDetails>(sql, new { PaperId = request.PaperId });
-        // return paper;
-        throw new NotImplementedException("Query not implemented yet");
+        _dbConnection.Open();
+        
+        string sql = "SELECT id, title, authors, summary FROM papers WHERE id = @PaperId";
+        
+        var paper =  await _dbConnection.QueryFirstOrDefaultAsync<GetPaperDetailsResponse>(sql, new { request.PaperId });
+        
+        _dbConnection.Close();
+        
+        return paper is not null ? new GetPaperDetailsResponse(request.PaperId, paper.Title, paper.Authors, paper.Summary) : null;
     }
 }

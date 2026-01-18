@@ -14,7 +14,7 @@ public static class GetPaperByIdEndpoint
                 var response = await handler.HandleAsync(request, CancellationToken.None);
                 return response != null ? Results.Ok(response) : Results.NotFound();
             })
-            .Produces<PaperDetails>(StatusCodes.Status200OK)
+            .Produces<GetPaperDetailsResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .DisableAntiforgery();
     }
