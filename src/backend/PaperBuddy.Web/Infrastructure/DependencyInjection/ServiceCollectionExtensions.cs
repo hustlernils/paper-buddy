@@ -43,6 +43,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<GetChatsHandler>();
         services.AddScoped<GetChatMessagesHandler>();
         services.AddScoped<AddChatMessageHandler>();
+        services.AddScoped<GetPaperByIdHandler>();
 
         return services;
     }

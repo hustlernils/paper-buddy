@@ -5,6 +5,7 @@ import Projects from './pages/Projects'
 import Layout from './components/layout/Layout'
 import { ProjectDetails } from './pages/ProjectDetails/ProjectDetails'
 import { ChatPage } from './pages/ChatPage'
+import { PaperDetails } from './pages/PaperDetails'
 
 function App() 
 {
@@ -14,6 +15,7 @@ function App()
         <Routes>
           <Route path="/" element={<Papers />} />
           <Route path="/papers" element={<Papers />} />
+          <Route path="/papers/:paperId" element={<PaperDetails />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:projectId" element={<ProjectDetails/>}/>
           <Route path="/chats/:chatId" element={<ChatPage/>}/>

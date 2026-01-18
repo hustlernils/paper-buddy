@@ -6,6 +6,7 @@ using PaperBuddy.Web.Features.UploadPaper;
 using PaperBuddy.Web.Features.GetProjects;
 using PaperBuddy.Web.Features.CreateProject;
 using PaperBuddy.Web.Features.GetChats;
+using PaperBuddy.Web.Features.GetPaperById;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,5 +57,6 @@ app.MapGetChatsEndpoint();
 app.MapCreateChatEndpoint();
 app.MapGetChatMessagesEndpoint();
 app.MapAddChatMessageEndpoint();
+app.MapGetPaperByIdEndpoint();
 
 app.Run();

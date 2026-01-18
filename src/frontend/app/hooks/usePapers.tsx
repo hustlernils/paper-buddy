@@ -6,18 +6,25 @@ import { useFetch } from "./useFetch";
 
 export interface UsePapersResponse{
     papers: GetPapersResponse[], 
+    paperDetails: GetPaperDetailsResponse | null
     uploadPaper: (file: File | null) => Promise<void>, 
     refetch: () => Promise<void>
 }
 
-export const usePapers = (): UsePapersResponse => 
+export const usePapers = (paperId : string | undefined = undefined): UsePapersResponse => 
 {
-  const [state, dispatch] = useReducer(papersReducer, { papers: [], isLoading: false, error: null})
+  const [state, dispatch] = useReducer(papersReducer, { papers: [], paperDetails: null, isLoading: false, error: null})
   const { papers } = state;
   const { api } = useFetch();
 
   const actions = useMemo(() => createPapersActions(dispatch), [dispatch]) 
-    
+  
+  useEffect(() =>{
+    if (paperId){
+      fetchPaperDetails(paperId)
+    }    
+  },[])
+
   const fetchPapers = async () => 
   {
     try 
@@ -40,14 +47,10 @@ export const usePapers = (): UsePapersResponse =>
   const fetchPaperDetails = async (paperId: string) => {
     try
     {
-      actions.fetchStart();
-
       const paperDetailsResponse = await api.get<GetPaperDetailsResponse>(`/papers/${paperId}`)
 
-      if (paperDetailsResponse)
-      {
-        actions.fetchSuccess(paperDetailsResponse);
-      }
+      dispatch({type: 'SET_PAPER_DETAILS', payload: paperDetailsResponse})
+
     }
     catch (error)
     {
@@ -83,5 +86,5 @@ export const usePapers = (): UsePapersResponse =>
     fetchPapers();
   }, [])
 
-  return { papers, uploadPaper, refetch: fetchPapers }
+  return { papers, paperDetails: state.paperDetails, uploadPaper, refetch: fetchPapers }
 }
