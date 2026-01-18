@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import { usePapers } from "../hooks/usePapers";
 import { Toolbar } from "../components/layout/Toolbar";
+import { Card, CardContent, CardTitle } from "../components/ui/Card";
+import { Separator } from "../components/ui/separator";
 
 export const PaperDetails = () => {
   const { paperId } = useParams<{paperId: string}>(); 
@@ -10,10 +12,13 @@ export const PaperDetails = () => {
     <>
       <Toolbar title={paperDetails?.title ?? "Unknown Title"}>
       </Toolbar>
-    <div>
-      <h1>Summary</h1>
-      {paperDetails?.summary}
-    </div>
+    <Card>
+        <CardTitle className="ml-6">Paper Summary</CardTitle>
+        <Separator></Separator>
+        <CardContent>
+          {paperDetails?.summary}
+        </CardContent>
+    </Card>
     </> 
   )
 }
