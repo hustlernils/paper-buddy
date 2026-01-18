@@ -8,6 +8,7 @@ using PaperBuddy.Web.Features.CreateChat;
 using PaperBuddy.Web.Features.CreateProject;
 using PaperBuddy.Web.Features.GetChatMessages;
 using PaperBuddy.Web.Features.GetChats;
+using PaperBuddy.Web.Features.GetPaperById;
 using PaperBuddy.Web.Features.GetPapers;
 using PaperBuddy.Web.Features.GetProjects;
 using PaperBuddy.Web.Features.UploadPaper;
