@@ -30,8 +30,8 @@ public class ExtractPaperInfoHandler(IDbConnection connection, ILogger<ExtractPa
         }
 
         var pdfData = await _pdfMetadataExtractor.ExtractMetadataAsync(paperData);
-        var fullText = await _pdfMetadataExtractor.ExtractTextAsync(paperData);
-
+        var fullText = await GetFullTextAsync(paperData);
+        
         await _dbConnection.ExecuteAsync(
             @"UPDATE papers SET title = @Title, authors = @Authors, year = @Year WHERE id = @Id",
             new
@@ -42,12 +42,20 @@ public class ExtractPaperInfoHandler(IDbConnection connection, ILogger<ExtractPa
                 Year = pdfData.Year,
             });
 
-        await _dbConnection.ExecuteAsync("UPDATE paper_data SET text_content = @TextContent WHERE id = @Id",
+        await _dbConnection.ExecuteAsync("UPDATE paper_data SET text_content = @TextContent WHERE paper_id = @Id",
             new { Id = message.PaperId, TextContent = fullText });
+        
+        _dbConnection.Close();
         
         _logger.LogInformation("Extracted and updated info for paper {PaperId}", message.PaperId);
         
         await _messageBus.PublishAsync(new SummarizePaperRequest(message.PaperId), cancellationToken);
+    }
+
+    private async Task<string> GetFullTextAsync(byte[] paperData)
+    {
+        var textParagraphs = await _pdfMetadataExtractor.ExtractParagraphsAsync(paperData);
+        return string.Join(" ", textParagraphs);
     }
     
     private static int? GetYear(string? pdfDateString)
