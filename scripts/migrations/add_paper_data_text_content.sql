@@ -1,0 +1,1 @@
+ALTER TABLE paper_data ADD text_content text DEFAULT null;

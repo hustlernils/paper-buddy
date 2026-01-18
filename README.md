@@ -4,6 +4,25 @@ Your digital writing buddy.
 
 Build with React + shadcn/ui
 
+# Setup
+
+Start database and ollama:
+
+``` bash
+./start-stack.sh
+```
+# Database Migrations
+
+Migration scripts are found under `./script/migrations`. To run a migration use:
+
+```bash
+cd scripts
+```
+
+```bash
+bash ./run-migration.sh <migration_file.sql>
+```
+
 ## Roadmap & TODO List
 
 ### High Priority

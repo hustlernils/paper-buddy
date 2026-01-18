@@ -51,6 +51,7 @@ erDiagram
         GUID id PK
         GUID paper_id FK
         bytea data
+        text text_content
         datetime created_at
     }
     PAPER_EMBEDDINGS {
