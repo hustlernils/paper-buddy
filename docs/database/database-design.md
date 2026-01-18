@@ -20,6 +20,7 @@ erDiagram
         int year
         string doi
         string url
+        text summary
         GUID uploaded_by FK
         datetime created_at
     }
