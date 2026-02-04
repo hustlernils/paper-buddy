@@ -5,7 +5,7 @@ import { useProjects } from "../../hooks/useProjects";
 import { Card, CardHeader, CardDescription, CardContent } from "../../components/ui/Card";
 import { Input } from "../../components/ui/Input";
 import { Label } from "../../components/ui/Label";
-import { Separator } from "../../components/ui/Separator";
+import { Separator } from "../../components/ui/separator";
 import { usePapers } from "../../hooks/usePapers";
 import { useState, type ChangeEvent } from "react";
 import { type GetPapersResponse } from "../../types/api";
