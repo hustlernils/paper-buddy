@@ -46,6 +46,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors(MyAllowSpecificOrigins);
+app.UseRouting();
 
 app.Services.UseMessageBus();
 
