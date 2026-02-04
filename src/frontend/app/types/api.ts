@@ -33,3 +33,10 @@ export interface CreateChatRequest {
     parentType: string,
     parentId: string
 }
+
+export interface GetPaperDetailsResponse {
+    id: string
+    title?: string
+    authors: string
+    summary: string
+}

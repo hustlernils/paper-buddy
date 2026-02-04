@@ -1,5 +1,5 @@
 import type React from "react"
-import { Separator } from "../ui/Separator"
+import { Separator } from "../ui/separator"
 import Header from "../Header"
 
 export interface ToolbarProps{

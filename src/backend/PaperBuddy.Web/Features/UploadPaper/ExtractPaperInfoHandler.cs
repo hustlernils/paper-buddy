@@ -1,15 +1,17 @@
 using System.Data;
 using Dapper;
 using PaperBuddy.MessageBus.Abstractions;
+using PaperBuddy.Web.Common.Abstractions;
 using UglyToad.PdfPig;
 
 namespace PaperBuddy.Web.Features.UploadPaper;
 
-public class ExtractPaperInfoHandler(IDbConnection connection, ILogger<ExtractPaperInfoHandler> logger, IMessageBus messageBus) : IConsumer<ExtractPaperInfoRequest>
+public class ExtractPaperInfoHandler(IDbConnection connection, ILogger<ExtractPaperInfoHandler> logger, IMessageBus messageBus, IPdfMetadataExtractor metadataExtractor) : IConsumer<ExtractPaperInfoRequest>
 {
     private readonly IDbConnection _dbConnection = connection;
     private readonly ILogger<ExtractPaperInfoHandler> _logger = logger;
     private readonly IMessageBus _messageBus = messageBus;
+    private readonly IPdfMetadataExtractor _pdfMetadataExtractor = metadataExtractor;
 
     public async Task ConsumeAsync(ExtractPaperInfoRequest message, CancellationToken cancellationToken)
     {
@@ -27,28 +29,33 @@ public class ExtractPaperInfoHandler(IDbConnection connection, ILogger<ExtractPa
             return;
         }
 
-        using var ms = new MemoryStream(paperData);
-        using var document = PdfDocument.Open(ms);
-
-        var info = document.Information;
-
-        var title = info.Title ?? "Unknown Title";
-        var authors = info.Author ?? "Unknown Author";
-        var year = GetYear(info.CreationDate);
-
+        var pdfData = await _pdfMetadataExtractor.ExtractMetadataAsync(paperData);
+        var fullText = await GetFullTextAsync(paperData);
+        
         await _dbConnection.ExecuteAsync(
             @"UPDATE papers SET title = @Title, authors = @Authors, year = @Year WHERE id = @Id",
             new
             {
                 Id = message.PaperId,
-                Title = title,
-                Authors = authors,
-                Year = year
+                Title = pdfData.Title,
+                Authors = pdfData.Authors,
+                Year = pdfData.Year,
             });
 
+        await _dbConnection.ExecuteAsync("UPDATE paper_data SET text_content = @TextContent WHERE paper_id = @Id",
+            new { Id = message.PaperId, TextContent = fullText });
+        
+        _dbConnection.Close();
+        
         _logger.LogInformation("Extracted and updated info for paper {PaperId}", message.PaperId);
         
         await _messageBus.PublishAsync(new SummarizePaperRequest(message.PaperId), cancellationToken);
+    }
+
+    private async Task<string> GetFullTextAsync(byte[] paperData)
+    {
+        var textParagraphs = await _pdfMetadataExtractor.ExtractParagraphsAsync(paperData);
+        return string.Join(" ", textParagraphs);
     }
     
     private static int? GetYear(string? pdfDateString)

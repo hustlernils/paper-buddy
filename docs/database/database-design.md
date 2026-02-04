@@ -20,6 +20,7 @@ erDiagram
         int year
         string doi
         string url
+        text summary
         GUID uploaded_by FK
         datetime created_at
     }
@@ -51,6 +52,7 @@ erDiagram
         GUID id PK
         GUID paper_id FK
         bytea data
+        text text_content
         datetime created_at
     }
     PAPER_EMBEDDINGS {

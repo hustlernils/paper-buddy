@@ -4,10 +4,32 @@ Your digital writing buddy.
 
 Build with React + shadcn/ui
 
+# Setup
+
+Start database and ollama:
+
+``` bash
+./start-stack.sh
+```
+# Database Migrations
+
+Migration scripts are found under `./script/migrations`. To run a migration use:
+
+```bash
+cd scripts
+```
+
+```bash
+bash ./run-migration.sh <migration_file.sql>
+```
+
 ## Roadmap & TODO List
 
 ### High Priority
-- [ ] **Paper Content Analysis**: Implement AI-powered summarization, key point extraction, and keyword tagging for uploaded PDFs.
+- [ ] **Paper Content Analysis**:
+  - [x] Implement AI-powered summarization
+  - [ ] key point extraction
+  - [ ] keyword tagging for uploaded PDFs.
 - [ ] **Multi-Paper Chat**: Enable project-level chats that reference all associated papers (e.g., "Summarize findings from all papers in this project").
 - [ ] **Citation Management**: Add auto-generation of citations (BibTeX, APA) and a reference tracker in the UI.
 

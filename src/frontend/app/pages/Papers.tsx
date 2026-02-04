@@ -2,7 +2,7 @@ import { Input } from "../components/ui/Input"
 import { Label } from "../components/ui/Label"
 import { Badge } from "../components/ui/Badge"
 import { Card, CardDescription, CardHeader } from "../components/ui/Card"
-import { Separator } from "../components/ui/Separator"
+import { Separator } from "../components/ui/separator"
 import { Button } from "../components/ui/Button"
 import {
   Dialog,
@@ -17,12 +17,19 @@ import { Grid } from '../components/layout/Grid'
 import { Toolbar } from "../components/layout/Toolbar";
 import { usePapers } from "../hooks/usePapers";
 import { type GetPapersResponse } from "../types/api";
+import { useNavigate } from "react-router-dom"
 
 const Papers = () => 
 {
   const [file, setFile] = useState<File | null>(null);
   const { papers, uploadPaper } = usePapers();
-   
+  const navigate = useNavigate(); 
+
+  const openPaperDetails = (index: number) => {
+    const id = papers[index].id
+    navigate(`/papers/${id}`)
+  }
+
   return (
     <>
       <Toolbar title="Your Papers">
@@ -60,7 +67,7 @@ const Papers = () =>
         {papers.map((item: GetPapersResponse, cardIndex: number) => 
         {
           return (
-            <Card key={`paper-${cardIndex}`}>
+            <Card onClick={() => openPaperDetails(cardIndex)} key={`paper-${cardIndex}`}>
               <CardHeader className="text-center">{item.title}</CardHeader>
               <CardDescription className="text-center">{item.authors}</CardDescription>
               <Separator></Separator>
