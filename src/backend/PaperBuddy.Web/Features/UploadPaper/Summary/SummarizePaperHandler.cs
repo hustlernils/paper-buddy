@@ -16,7 +16,6 @@ public class SummarizePaperHandler(ILogger<SummarizePaperHandler> logger, IDbCon
         _dbConnection.Open();
         
         string sql = "SELECT text_content FROM paper_data WHERE paper_id = @PaperId";
-
         var fullText = await _dbConnection.QueryFirstAsync<string>(sql, new { PaperId = message.PaperId });
 
         if (string.IsNullOrEmpty(fullText))
