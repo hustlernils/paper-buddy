@@ -5,7 +5,7 @@ namespace PaperBuddy.Web.Infrastructure.Services;
 
 public class TextChunk
 {
-    public int Id { get; set; }
+    public int ChunkIndex { get; set; }
     public string Text { get; set; }
 }
 
@@ -38,7 +38,8 @@ public class ChunkingService
             AddBufferToChunks(buffer, chunks);
         }
 
-        return chunks.Select((text, index) => new TextChunk { Text = text, Id = index}).ToArray();
+        return chunks.Select((text, index) => new TextChunk { Text = text, ChunkIndex = index})
+            .ToArray();
     }
 
     private void AddBufferToChunks(List<string> buffer, List<string> chunks)
