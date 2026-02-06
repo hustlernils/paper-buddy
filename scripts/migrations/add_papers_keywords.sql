@@ -1,0 +1,1 @@
+ALTER TABLE papers ADD keywords text[] NOT NULL DEFAULT ARRAY[]::text[];

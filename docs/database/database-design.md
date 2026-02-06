@@ -21,6 +21,7 @@ erDiagram
         string doi
         string url
         text summary
+        text[] keywords
         GUID uploaded_by FK
         datetime created_at
     }

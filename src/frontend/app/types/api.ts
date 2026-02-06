@@ -3,6 +3,7 @@ export interface GetPapersResponse
     id: string,
     title?: string,
     authors: string
+    tags: string[]
 }
 
 export interface GetProjectsResponse{

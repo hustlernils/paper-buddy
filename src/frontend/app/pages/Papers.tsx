@@ -73,8 +73,9 @@ const Papers = () =>
               <Separator></Separator>
               <div className="flex px-2 flex-wrap gap-2 justify-start">
                 <h2>Tags</h2>
-                <Badge>Example tag</Badge>                                
-                <Badge>tag</Badge>
+                  {item.tags && item.tags.map((tag) => (
+                    <Badge>{tag}</Badge>
+                  ))}
               </div>
             </Card>
           )

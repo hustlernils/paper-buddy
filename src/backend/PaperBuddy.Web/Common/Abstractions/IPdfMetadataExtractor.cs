@@ -7,4 +7,4 @@ public interface IPdfMetadataExtractor
     Task<List<string>> ExtractParagraphsAsync(byte[] pdfData);
 }
 
-public record PdfMetadata(string Title, string Authors, int? Year);
+public record PdfMetadata(string Title, string Authors, int? Year, string[] Keywords);

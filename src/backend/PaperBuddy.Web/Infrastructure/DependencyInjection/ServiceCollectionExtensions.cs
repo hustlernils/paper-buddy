@@ -13,8 +13,7 @@ using PaperBuddy.Web.Features.GetPapers;
 using PaperBuddy.Web.Features.GetProjects;
 using PaperBuddy.Web.Features.UploadPaper;
 using PaperBuddy.Web.Infrastructure.Services;
-
-using Infrastructure = PaperBuddy.Web.Infrastructure;
+using PaperBuddy.Web.Infrastructure;
 
 // ReSharper disable CheckNamespace
 
@@ -25,14 +24,15 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddPostgres(this IServiceCollection services,
         IConfiguration configuration)
     {
-        SqlMapper.AddTypeHandler(new Infrastructure.EnumTypeHandler<ParentType>());
-
+        SqlMapper.AddTypeHandler(new EnumTypeHandler<ParentType>());
+        SqlMapper.AddTypeHandler(new StringArrayHandler());
+        
         services.AddTransient<IDbConnection>(sp =>
             new NpgsqlConnection(configuration.GetConnectionString("PostgresConnection")));
 
         return services;
     }
-
+    
     public static IServiceCollection AddHandlers(this IServiceCollection services)
     {
         services.AddScoped<UploadPaperHandler>();

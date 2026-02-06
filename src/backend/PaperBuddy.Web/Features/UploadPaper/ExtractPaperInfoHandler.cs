@@ -33,13 +33,14 @@ public class ExtractPaperInfoHandler(IDbConnection connection, ILogger<ExtractPa
         var fullText = await GetFullTextAsync(paperData);
         
         await _dbConnection.ExecuteAsync(
-            @"UPDATE papers SET title = @Title, authors = @Authors, year = @Year WHERE id = @Id",
+            @"UPDATE papers SET title = @Title, authors = @Authors, year = @Year, keywords = @Keywords WHERE id = @Id",
             new
             {
                 Id = message.PaperId,
                 Title = pdfData.Title,
                 Authors = pdfData.Authors,
                 Year = pdfData.Year,
+                Keywords = pdfData.Keywords,
             });
 
         await _dbConnection.ExecuteAsync("UPDATE paper_data SET text_content = @TextContent WHERE paper_id = @Id",

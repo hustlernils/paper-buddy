@@ -17,12 +17,13 @@ public class PdfMetadataExtractor : IPdfMetadataExtractor
             using var document = PdfDocument.Open(ms);
 
             var info = document.Information;
-
+            
             var title = info.Title ?? "Unknown Title";
             var authors = info.Author ?? "Unknown Author";
             var year = GetYear(info.CreationDate);
-
-            return new PdfMetadata(title, authors, year);
+            var keywords = info.Keywords?.Split(',') ?? []; 
+            
+            return new PdfMetadata(title, authors, year, keywords);
         });
     }
 
