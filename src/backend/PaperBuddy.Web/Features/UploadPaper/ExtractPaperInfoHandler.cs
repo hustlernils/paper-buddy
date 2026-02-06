@@ -51,6 +51,8 @@ public class ExtractPaperInfoHandler(IDbConnection connection, ILogger<ExtractPa
         _logger.LogInformation("Extracted and updated info for paper {PaperId}", message.PaperId);
         
         await _messageBus.PublishAsync(new SummarizePaperRequest(message.PaperId), cancellationToken);
+        // publish CreatePaperEmbeddingsRequest when fully implemented :)
+        // await _messageBus.PublishAsync(new CreatePaperEmbeddingsRequest(message.PaperId), cancellationToken);
     }
 
     private async Task<string> GetFullTextAsync(byte[] paperData)
