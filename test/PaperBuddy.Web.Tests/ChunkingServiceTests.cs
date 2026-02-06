@@ -192,14 +192,15 @@ public class ChunkingServiceTests
     [Fact]
     public void GetChunks_LargeText_PerformsEfficiently()
     {
-        var sentences = Enumerable.Repeat("This is a test sentence for performance testing. ", 1000);
+        var sentences = Enumerable.Repeat("This is a test sentence for performance testing. ", 10000);
         var text = string.Join("", sentences);
 
         var startTime = DateTime.UtcNow;
         var result = _chunkingService.GetChunks(text);
         var endTime = DateTime.UtcNow;
-
+        var totalSeconds = (endTime - startTime).TotalSeconds;
+        
         Assert.True(result.Length > 1);
-        Assert.True((endTime - startTime).TotalSeconds < 5, "Chunking should complete within 5 seconds");
+        Assert.True(totalSeconds < 5, "Chunking should complete within 5 seconds");
     }
 }

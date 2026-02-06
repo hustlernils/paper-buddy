@@ -17,8 +17,11 @@ public class CreatePaperEmbeddingsHandler(IDbConnection connection, ChunkingServ
         string sql = "SELECT text_content FROM paper_data WHERE paper_id = @PaperId";
         var fullText = await _dbConnection.QueryFirstAsync<string>(sql, new { PaperId = message.PaperId });
 
-
-
-        throw new NotImplementedException();
+        var chunks = _chunkingService.GetChunks(fullText);
+        
+        _dbConnection.Close();
+        
+        // remove this once fully implemented :)
+        return Task.CompletedTask;
     }
 }
