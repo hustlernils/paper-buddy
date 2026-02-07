@@ -7,6 +7,7 @@ using PaperBuddy.Web.Features.GetProjects;
 using PaperBuddy.Web.Features.CreateProject;
 using PaperBuddy.Web.Features.GetChats;
 using PaperBuddy.Web.Features.GetPaperById;
+using PaperBuddy.Web.Features.UploadPaper.Embeddings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddMessageBus(config =>
 {
     config.AddConsumer<SummarizePaperHandler>();
     config.AddConsumer<ExtractPaperInfoHandler>();
+    config.AddConsumer<CreatePaperEmbeddingsHandler>();
 });
 
 var app = builder.Build();

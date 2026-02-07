@@ -54,6 +54,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISummarizationService, OllamaSummarizationService>();
         services.AddScoped<IPdfMetadataExtractor, PdfMetadataExtractor>();
         services.AddScoped<ChatService>();
+        services.AddScoped<ChunkingService>();
 
         return services;
     }
