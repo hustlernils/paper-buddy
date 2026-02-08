@@ -1,6 +1,6 @@
 import { ChatList } from "../../components/chat/ChatList";
 import { useChats } from "../../hooks/useChats";
-import { Card, CardContent, CardTitle } from "../../components/ui/Card";
+import { Card, CardContent, CardTitle, CardHeader } from "../../components/ui/Card";
 import { useNavigate } from "react-router-dom";
 
 export interface ProjectChatsProps {
@@ -19,7 +19,9 @@ export const ProjectChats = ( { projectId }: ProjectChatsProps) => {
 
     return (
       <Card>
-        <CardTitle>Chats on this project</CardTitle>
+        <CardHeader>
+          <CardTitle>Chats on this project</CardTitle>
+        </CardHeader>
         <CardContent>
             <ChatList chats={chats} openChat={openChat}/>
         </CardContent>
