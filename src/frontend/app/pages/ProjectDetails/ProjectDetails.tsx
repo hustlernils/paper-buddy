@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import { Button } from "../../components/ui/Button";
 import { Toolbar } from "../../components/layout/Toolbar";
 import { useProjects } from "../../hooks/useProjects";
-import { Card, CardHeader, CardDescription, CardContent } from "../../components/ui/Card";
+import { Card, CardHeader, CardDescription, CardContent, CardTitle } from "../../components/ui/Card";
 import { Input } from "../../components/ui/Input";
 import { Label } from "../../components/ui/Label";
 import { Separator } from "../../components/ui/separator";
@@ -20,7 +20,6 @@ export const ProjectDetails = () =>
   const { projectId } = useParams<{projectId: string}>(); 
   const { getCurrentProject } = useProjects();
   const { papers } = usePapers();
-  const [notes, setNotes] = useState<string[]>(["Initial project note", "Research hypothesis"]);
   const [newNote, setNewNote] = useState<string>("");
   const { createChat } = useChats(projectId, 'Project');
 
@@ -51,24 +50,23 @@ export const ProjectDetails = () =>
         <Grid>
           <GridItem className="row-start-1 col-span-3 row-span-1">
             <Card>
-              <CardHeader>Notes</CardHeader>
-              <ul className="list-disc pl-5">
-                {notes.map((note, index) => <li key={index}>{note}</li>)}
-              </ul>
-              <Separator />
-              <div className="space-y-2">
-                <Label htmlFor="new-note">Add Note</Label>
-                <Input id="new-note" value={newNote} onChange={(e: ChangeEvent<HTMLInputElement>) => setNewNote((e.target as HTMLInputElement).value)} />
-                <Button onClick={addNote}>Add</Button>
-              </div>
+              <CardHeader>Project description</CardHeader>   
+                <Separator />
+                <CardContent>
+                <CardDescription>
+                {currentProject?.description}
+                </CardDescription>
+              </CardContent>
             </Card>
           </GridItem>
           <GridItem className="col-span-3 row-span-2 row-start-1">
             <Card>
               <CardHeader>Related Papers</CardHeader>
+              <CardContent>
               <CardDescription>
               All papers asociated with this project
               </CardDescription>
+              </CardContent>
               <Separator/>
             <CardContent>
               <ItemGroup>
