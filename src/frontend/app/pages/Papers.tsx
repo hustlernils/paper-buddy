@@ -11,7 +11,7 @@ import { UploadPaperDialog } from "../components/UploadPaperDialog";
 
 const Papers = () => 
 {
-  const { papers } = usePapers();
+  const { papers, uploadPaper } = usePapers();
   const navigate = useNavigate(); 
 
   const openPaperDetails = (index: number) => {
@@ -22,7 +22,7 @@ const Papers = () =>
   return (
     <>
       <Toolbar title="Your Papers">
-        <UploadPaperDialog>
+        <UploadPaperDialog projectId={undefined}>
           <Button className="ml-auto">Upload Paper</Button>
         </UploadPaperDialog>
       </Toolbar>

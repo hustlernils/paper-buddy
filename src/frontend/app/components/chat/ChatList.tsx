@@ -35,9 +35,11 @@ export interface ChatListProps {
 export const ChatList = ( { chats, openChat }: ChatListProps ) => {
     return (
       <ItemGroup>
-        {chats.map((chat, index) => (
+        {chats.length > 0 
+        ? chats.map((chat, index) => (
             <ChatItem key={`chat-${index}`} chat={chat} onClick={() => openChat(index)}/>
-          ))}
+          ))
+        : <p>No chats yet</p>}
       </ItemGroup>      
     )
 }

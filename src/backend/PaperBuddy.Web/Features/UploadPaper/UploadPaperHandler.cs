@@ -29,6 +29,12 @@ public class UploadPaperHandler(IDbConnection connection, IMessageBus messageBus
 
             await InsertPaperData(request.File, paper.Id);
 
+            if (request.ProjectId is not null)
+            {
+                // create bridge entity between project and paper
+                await _dbConnection.ExecuteAsync("INSERT INTO project_papers (project_id, paper_id) VALUES (@ProjectId, @PaperId)", new { ProjectId = request.ProjectId, PaperId = paper.Id});
+            }
+            
             await _bus.PublishAsync(new ExtractPaperInfoRequest(paper.Id), cancellationToken);
             
             transaction.Commit();
@@ -42,7 +48,7 @@ public class UploadPaperHandler(IDbConnection connection, IMessageBus messageBus
             throw;
         }
     }
-
+    
     private async Task InsertPaperData(IFormFile file, Guid paperId)
     {
         await using var ms = new MemoryStream();

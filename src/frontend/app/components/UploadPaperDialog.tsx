@@ -16,9 +16,10 @@ import { usePapers } from "../hooks/usePapers";
 export interface UploadPaperDialogProps 
 {
   children: React.ReactNode;
+  projectId: string | undefined
 }
 
-export const UploadPaperDialog = ({ children }: UploadPaperDialogProps) => 
+export const UploadPaperDialog = ({ children, projectId }: UploadPaperDialogProps) => 
 {
   const [file, setFile] = useState<File | null>(null);
   const { uploadPaper } = usePapers();
@@ -26,7 +27,7 @@ export const UploadPaperDialog = ({ children }: UploadPaperDialogProps) =>
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => 
   {
     e.preventDefault();
-    await uploadPaper(file);
+    await uploadPaper(file, projectId);
     console.log("success!");
   };
 

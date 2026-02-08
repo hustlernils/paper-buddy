@@ -2,6 +2,7 @@ import { ChatList } from "../../components/chat/ChatList";
 import { useChats } from "../../hooks/useChats";
 import { Card, CardContent, CardTitle, CardHeader } from "../../components/ui/Card";
 import { useNavigate } from "react-router-dom";
+import { Separator } from "../../components/ui/separator"
 
 export interface ProjectChatsProps {
   projectId: string | undefined
@@ -21,9 +22,10 @@ export const ProjectChats = ( { projectId }: ProjectChatsProps) => {
       <Card>
         <CardHeader>
           <CardTitle>Chats on this project</CardTitle>
-        </CardHeader>
+        </CardHeader>        
+          <Separator/>
         <CardContent>
-            <ChatList chats={chats} openChat={openChat}/>
+          <ChatList chats={chats} openChat={openChat}/>
         </CardContent>
       </Card>
     )

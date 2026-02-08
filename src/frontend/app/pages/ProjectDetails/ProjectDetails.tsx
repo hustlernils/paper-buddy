@@ -53,7 +53,7 @@ export const ProjectDetails = () =>
             <CardHeader>
               <CardTitle>Related Papers</CardTitle>
               <CardAction>
-                <UploadPaperDialog>
+                <UploadPaperDialog projectId={projectId}>
                   <Button>Upload Paper</Button>
                 </UploadPaperDialog>
               </CardAction>
@@ -65,6 +65,8 @@ export const ProjectDetails = () =>
                   {papers.map((paper: GetPapersResponse, index: number) => (
                     <Item variant="outline">
                       <div key={index}>
+                        <h3>{paper.title}</h3>
+                        <Separator/>
                         <p className="text-sm text-gray-600">{paper.authors}</p>
                       </div>
                     </Item>                    
