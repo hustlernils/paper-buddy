@@ -2,39 +2,25 @@ import { useParams } from "react-router-dom"
 import { Button } from "../../components/ui/Button";
 import { Toolbar } from "../../components/layout/Toolbar";
 import { useProjects } from "../../hooks/useProjects";
-import { Card, CardHeader, CardDescription, CardContent } from "../../components/ui/Card";
-import { Input } from "../../components/ui/Input";
-import { Label } from "../../components/ui/Label";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardAction } from "../../components/ui/Card";
 import { Separator } from "../../components/ui/separator";
 import { usePapers } from "../../hooks/usePapers";
-import { useState, type ChangeEvent } from "react";
 import { type GetPapersResponse } from "../../types/api";
 import { Grid } from '../../components/layout/Grid'
 import { GridItem } from '../../components/layout/GridItem'
 import { ProjectChats } from "./ProjectChats";
 import { useChats } from "../../hooks/useChats";
 import { Item, ItemGroup } from "../../components/ui/item";
+import UploadPaperDialog from "../../components/UploadPaperDialog"
 
 export const ProjectDetails = () => 
 {
   const { projectId } = useParams<{projectId: string}>(); 
   const { getCurrentProject } = useProjects();
   const { papers } = usePapers();
-  const [notes, setNotes] = useState<string[]>(["Initial project note", "Research hypothesis"]);
-  const [newNote, setNewNote] = useState<string>("");
   const { createChat } = useChats(projectId, 'Project');
 
   const currentProject = getCurrentProject(projectId)
-
-  const addNote = () => 
-  {
-    if (newNote.trim()) 
-    {
-      setNotes([...notes, newNote]);
-      setNewNote("");
-    }
-  }
-
   const handleCreateChat = () => 
   {
     if (projectId) 
@@ -45,38 +31,43 @@ export const ProjectDetails = () =>
 
   return(
     <>
-      <Toolbar title={currentProject?.title}>
+      <Toolbar title={`Project: ${currentProject?.title}`}>
         <Button onClick={() => handleCreateChat()}>New Chat</Button>
       </Toolbar>
-        <Grid>
-          <GridItem className="row-start-1 col-span-3 row-span-1">
-            <Card>
-              <CardHeader>Notes</CardHeader>
-              <ul className="list-disc pl-5">
-                {notes.map((note, index) => <li key={index}>{note}</li>)}
-              </ul>
-              <Separator />
-              <div className="space-y-2">
-                <Label htmlFor="new-note">Add Note</Label>
-                <Input id="new-note" value={newNote} onChange={(e: ChangeEvent<HTMLInputElement>) => setNewNote((e.target as HTMLInputElement).value)} />
-                <Button onClick={addNote}>Add</Button>
-              </div>
-            </Card>
-          </GridItem>
-          <GridItem className="col-span-3 row-span-2 row-start-1">
-            <Card>
-              <CardHeader>Related Papers</CardHeader>
+      <Grid>
+        <GridItem className="row-start-1 col-span-3 row-span-1">
+          <Card>
+            <CardHeader>
+              <CardTitle>Project description</CardTitle>
+            </CardHeader>   
+            <Separator />
+            <CardContent>
               <CardDescription>
-              All papers asociated with this project
+                {currentProject?.description}
               </CardDescription>
-              <Separator/>
+            </CardContent>
+          </Card>
+        </GridItem>
+        <GridItem className="col-span-3 row-span-2 row-start-1">
+          <Card>
+            <CardHeader>
+              <CardTitle>Related Papers</CardTitle>
+              <CardAction>
+                <UploadPaperDialog projectId={projectId}>
+                  <Button>Upload Paper</Button>
+                </UploadPaperDialog>
+              </CardAction>
+            </CardHeader>
+            <Separator />
             <CardContent>
               <ItemGroup>
                 <div className="space-y-2">
                   {papers.map((paper: GetPapersResponse, index: number) => (
                     <Item variant="outline">
                       <div key={index}>
-                      <p className="text-sm text-gray-600">{paper.authors}</p>
+                        <h3>{paper.title}</h3>
+                        <Separator/>
+                        <p className="text-sm text-gray-600">{paper.authors}</p>
                       </div>
                     </Item>                    
                   ))}
@@ -84,10 +75,10 @@ export const ProjectDetails = () =>
               </ItemGroup>              
             </CardContent>
           </Card>
-          </GridItem>
-          <GridItem className="row-start-2 col-span-3">
-            <ProjectChats projectId={projectId}/>
-          </GridItem>      
+        </GridItem>
+        <GridItem className="row-start-2 col-span-3">
+          <ProjectChats projectId={projectId}/>
+        </GridItem>      
       </Grid>
     </>
   )
