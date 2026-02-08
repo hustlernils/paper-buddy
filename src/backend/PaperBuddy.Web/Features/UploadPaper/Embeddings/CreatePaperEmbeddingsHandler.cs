@@ -27,7 +27,7 @@ public class CreatePaperEmbeddingsHandler(IDbConnection connection, ChunkingServ
         // TODO: rename text to content (text is postgres keyword)
         // TODO: change expected vector dimensions (nomic-embed-text returns 768), the database expectes 1536
         string insertSql =
-            "INSERT INTO paper_embeddings (id, paper_id, embedding, chunk_id, \"text\", created_at) VALUES (@Id, @PaperId, @Embedding, @ChunkId, @Text, @CreatedAt)";
+            "INSERT INTO paper_embeddings (id, paper_id, embedding, chunk_id, content, created_at) VALUES (@Id, @PaperId, @Embedding, @ChunkId, @Content, @CreatedAt)";
         
         await _dbConnection.ExecuteAsync(insertSql, paperEmbeddings);
         
