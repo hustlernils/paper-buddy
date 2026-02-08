@@ -31,7 +31,7 @@ export const ProjectDetails = () =>
 
   return(
     <>
-      <Toolbar title={currentProject?.title}>
+      <Toolbar title={`Project: ${currentProject?.title}`}>
         <Button onClick={() => handleCreateChat()}>New Chat</Button>
       </Toolbar>
       <Grid>
