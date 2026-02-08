@@ -17,23 +17,33 @@ public class CreatePaperEmbeddingsHandler(IDbConnection connection, ChunkingServ
     {
         _dbConnection.Open();
 
-        string sql = "SELECT text_content FROM paper_data WHERE paper_id = @PaperId";
-        var fullText = await _dbConnection.QueryFirstAsync<string>(sql, new { message.PaperId });
-
+        var fullText = await QueryPaperTextContent(message.PaperId);
+        
         var chunks = _chunkingService.GetChunks(fullText);
 
         var paperEmbeddings = await CreatePaperEmbeddings(chunks, message.PaperId);
-
-        // TODO: rename text to content (text is postgres keyword)
-        // TODO: change expected vector dimensions (nomic-embed-text returns 768), the database expectes 1536
-        string insertSql =
-            "INSERT INTO paper_embeddings (id, paper_id, embedding, chunk_id, content, created_at) VALUES (@Id, @PaperId, @Embedding, @ChunkId, @Content, @CreatedAt)";
         
-        await _dbConnection.ExecuteAsync(insertSql, paperEmbeddings);
+        await InsertPaperEmbeddings(paperEmbeddings);
         
         _dbConnection.Close();
     }
 
+    private async Task<string> QueryPaperTextContent(Guid paperId)
+    {
+        string sql = "SELECT text_content FROM paper_data WHERE paper_id = @PaperId";
+        var fullText = await _dbConnection.QueryFirstAsync<string>(sql, new { paperId });
+        
+        return fullText;
+    }
+    
+    private async Task InsertPaperEmbeddings(List<PaperEmbedding> paperEmbeddings)
+    {
+        string insertSql =
+            "INSERT INTO paper_embeddings (id, paper_id, embedding, chunk_id, content, created_at) VALUES (@Id, @PaperId, @Embedding, @ChunkId, @Content, @CreatedAt)";
+        
+        await _dbConnection.ExecuteAsync(insertSql, paperEmbeddings);
+    }
+    
     private async Task<List<PaperEmbedding>> CreatePaperEmbeddings(TextChunk[] chunks, Guid paperId)
     {        
         var paperEmbeddings = new List<PaperEmbedding>();
