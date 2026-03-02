@@ -5,16 +5,17 @@ import { ChatMessages } from "./ChatMessages"
 interface ChatProps {
     id: string,
     messages: ChatMessageResponse[],
+    isSendingMessage: boolean,
     onSubmit: (content: string) => void
 }
 
-export const Chat = ( { messages, onSubmit }: ChatProps) => 
+export const Chat = ( { messages, isSendingMessage, onSubmit }: ChatProps) => 
 {
 
   return (
     <div className="relative h-[calc(100vh-8rem)]">
-      <ChatMessages messages={messages}/>
-      <ChatInput onSubmit={onSubmit} />
+      <ChatMessages messages={messages} isSendingMessage={isSendingMessage}/>
+      <ChatInput onSubmit={onSubmit} disabled={isSendingMessage} />
     </div>
   )
 }

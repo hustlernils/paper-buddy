@@ -4,9 +4,10 @@ import { Button } from "../ui/Button"
 
 export interface ChatInputProps {
     onSubmit: (content: string) => void
+    disabled?: boolean
 }
 
-export const ChatInput = ({ onSubmit }: ChatInputProps) => 
+export const ChatInput = ({ onSubmit, disabled = false }: ChatInputProps) => 
 {
   const [message, setMessage] = useState<string>("")
 
@@ -18,6 +19,7 @@ export const ChatInput = ({ onSubmit }: ChatInputProps) =>
   const handleSubmit = (e : React.FormEvent) =>
   {
     e.preventDefault()
+    if (disabled) return
     onSubmit(message)
     setMessage("")
   }
@@ -25,8 +27,8 @@ export const ChatInput = ({ onSubmit }: ChatInputProps) =>
   return(
     <div className="absolute bottom-0 left-0 right-0 bg-background border-t pt-4">
       <form className="flex flex-row gap-2 max-w-4xl mx-auto" onSubmit={handleSubmit}>
-        <Input className="flex-1" value={message} onChange={handleChange}></Input>
-        <Button type="submit">Send</Button>
+        <Input className="flex-1" value={message} onChange={handleChange} disabled={disabled}></Input>
+        <Button type="submit" disabled={disabled}>Send</Button>
       </form>
     </div>
   )

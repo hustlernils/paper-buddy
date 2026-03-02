@@ -6,7 +6,7 @@ import { Chat } from "../components/chat/Chat";
 export const ChatPage = () =>{
     const { chatId } = useParams<{chatId: string}>();
 
-    const { activeChat, setActiveChat, chatMessages, sendChatMessage} = useChats();
+    const { activeChat, setActiveChat, chatMessages, isSendingMessage, sendChatMessage} = useChats();
     
     useEffect(() =>{
       if(chatId){
@@ -16,7 +16,7 @@ export const ChatPage = () =>{
     
     return (
         <>
-          {activeChat && <Chat id={activeChat} messages={chatMessages} onSubmit={sendChatMessage}></Chat>}          
+          {activeChat && <Chat id={activeChat} messages={chatMessages} isSendingMessage={isSendingMessage} onSubmit={sendChatMessage}></Chat>}          
         </>
     )
 }

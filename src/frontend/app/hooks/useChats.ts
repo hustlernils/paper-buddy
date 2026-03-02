@@ -7,6 +7,7 @@ export interface UseChatsResponse {
   chats: ChatResponse[]
   activeChat: string | null
   chatMessages: ChatMessageResponse[]
+  isSendingMessage: boolean
   fetchChats: (parentId: string, parentType: ParentType) => void
   createChat: (parentId: string, parentType: ParentType) => void
   setActiveChat: (chatId: string) => void
@@ -19,7 +20,7 @@ export const useChats = (parentId?: string | undefined | null, parentType?: Pare
   const [chats, setChats] = useState<ChatResponse[]>([]);
   const [activeChat, setActiveChat] = useState<string | null>(null)
   const [chatMessages, setChatMessages] = useState<ChatMessageResponse[]>([])
-  const [isMessageLoading, setIsMessageLoading] = useState<boolean>(false)
+  const [isSendingMessage, setIsSendingMessage] = useState<boolean>(false)
 
   useEffect(() => 
   {
@@ -56,22 +57,27 @@ export const useChats = (parentId?: string | undefined | null, parentType?: Pare
 
   const sendChatMessage = async (content: string) =>
   {
-    setIsMessageLoading(true)
-    console.log(chatMessages)
-    if(activeChat)
-    {
-      await api.post(`/chats/${activeChat}/messages`, { content: content})
-      await fetchChatMessages(activeChat)
+    if (!activeChat) return
+    
+    // Optimistically add user message to UI
+    const optimisticMessage: ChatMessageResponse = {
+      role: "USER",
+      content: content,
+      createdAt: new Date().toISOString()
     }
-
-    setChatMessages(prev => [
-      ...prev,
-      {content, createdAt: "", role: "User"}])
-  
-      setIsMessageLoading(false)
+    setChatMessages(prev => [...prev, optimisticMessage])
+    
+    setIsSendingMessage(true)
+    try 
+    {
+      await api.post(`/chats/${activeChat}/messages`, { content: content })
+      await fetchChatMessages(activeChat)
+    } 
+    finally 
+    {
+      setIsSendingMessage(false)
+    }
   }
-
-  useEffect(() => console.log(chatMessages),[chatMessages])
 
   const fetchChatMessages = async (chatId : string) => 
   {
@@ -82,5 +88,5 @@ export const useChats = (parentId?: string | undefined | null, parentType?: Pare
     }
   }
 
-  return { chats, activeChat, chatMessages, fetchChats, createChat, sendChatMessage, setActiveChat}
+  return { chats, activeChat, chatMessages, isSendingMessage, fetchChats, createChat, sendChatMessage, setActiveChat }
 }
