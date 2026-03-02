@@ -1,0 +1,1 @@
+UPDATE chat_messages SET role = 'Assistant' WHERE role = 'System';

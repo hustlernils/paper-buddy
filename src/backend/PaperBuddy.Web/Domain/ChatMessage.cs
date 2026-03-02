@@ -5,13 +5,24 @@ namespace PaperBuddy.Web.Domain;
 public enum MessageRole
 {
     User,
-    System
+    Assistant
 }
 
 public class ChatMessage : TrackedEntity
 {
-    public Guid ChatId { get; set; }
-    public Guid UserId { get; set; }
-    public MessageRole Role { get; set; }
-    public string Content { get; set; } = string.Empty;
+    public ChatMessage(string content, MessageRole role, Guid chatId, Guid userId)
+    {
+        Content = content;
+        Role = role;
+        ChatId = chatId;
+        UserId = userId;
+    }
+
+    public Guid ChatId { get; }
+    public Guid UserId { get; }
+    public MessageRole Role { get; }
+    public string Content { get; } = string.Empty;
+
+    public static ChatMessage CreateSystemMessage(Guid chatId, Guid userId, string content)
+        => new(content, MessageRole.Assistant, chatId, userId);
 }

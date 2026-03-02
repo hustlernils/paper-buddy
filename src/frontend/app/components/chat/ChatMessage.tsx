@@ -1,7 +1,7 @@
 import { type ReactNode } from "react"
 
 export interface ChatMessageProps {
-    role: "USER" | "SYSTEM"
+    role: "USER" | "ASSISTANT"
     children: ReactNode
 }
 

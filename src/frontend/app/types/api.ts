@@ -25,7 +25,7 @@ export interface ChatResponse {
 };
 
 export interface ChatMessageResponse {
-    role: "USER" | "SYSTEM", 
+    role: "USER" | "ASSISTANT", 
     content: string,
     createdAt: string
 }
