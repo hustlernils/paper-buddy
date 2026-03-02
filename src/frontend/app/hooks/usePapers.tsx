@@ -19,8 +19,10 @@ export const usePapers = (paperId : string | undefined = undefined): UsePapersRe
 
   const actions = useMemo(() => createPapersActions(dispatch), [dispatch]) 
   
-  useEffect(() =>{
-    if (paperId){
+  useEffect(() =>
+  {
+    if (paperId)
+    {
       fetchPaperDetails(paperId)
     }    
   },[])
@@ -44,7 +46,8 @@ export const usePapers = (paperId : string | undefined = undefined): UsePapersRe
     }
   };
 
-  const fetchPaperDetails = async (paperId: string) => {
+  const fetchPaperDetails = async (paperId: string) => 
+  {
     try
     {
       const paperDetailsResponse = await api.get<GetPaperDetailsResponse>(`/papers/${paperId}`)

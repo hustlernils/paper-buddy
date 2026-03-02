@@ -24,7 +24,8 @@ export const useChats = (parentId?: string | undefined | null, parentType?: Pare
 
   useEffect(() => 
   {
-    if (parentId && parentType){
+    if (parentId && parentType)
+    {
       fetchChats(parentId, parentType)
     }
   }, [parentId])

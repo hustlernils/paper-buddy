@@ -5,10 +5,11 @@ export interface GridItemProps{
     className: string
 }
 
-export const GridItem = ({ children, className } :GridItemProps) => {
-    return (
-        <div className={className}>
-            {children}
-        </div>
-    )
+export const GridItem = ({ children, className } :GridItemProps) => 
+{
+  return (
+    <div className={className}>
+      {children}
+    </div>
+  )
 }

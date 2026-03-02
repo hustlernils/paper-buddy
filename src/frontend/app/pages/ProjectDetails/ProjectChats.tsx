@@ -8,7 +8,8 @@ export interface ProjectChatsProps {
   projectId: string | undefined
 }
 
-export const ProjectChats = ( { projectId }: ProjectChatsProps) => {
+export const ProjectChats = ( { projectId }: ProjectChatsProps) => 
+{
   const { chats } = useChats(projectId, 'Project');
   const navigate = useNavigate();
 
@@ -18,15 +19,15 @@ export const ProjectChats = ( { projectId }: ProjectChatsProps) => {
     navigate(`/chats/${chatId}`)
   }
 
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Chats on this project</CardTitle>
-        </CardHeader>        
-          <Separator/>
-        <CardContent>
-          <ChatList chats={chats} openChat={openChat}/>
-        </CardContent>
-      </Card>
-    )
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Chats on this project</CardTitle>
+      </CardHeader>        
+      <Separator/>
+      <CardContent>
+        <ChatList chats={chats} openChat={openChat}/>
+      </CardContent>
+    </Card>
+  )
 }
