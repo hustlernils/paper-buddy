@@ -14,7 +14,8 @@ const Papers = () =>
   const { papers, uploadPaper } = usePapers();
   const navigate = useNavigate(); 
 
-  const openPaperDetails = (index: number) => {
+  const openPaperDetails = (index: number) => 
+  {
     const id = papers[index].id
     navigate(`/papers/${id}`)
   }
@@ -37,9 +38,9 @@ const Papers = () =>
               <Separator></Separator>
               <div className="flex px-2 flex-wrap gap-2 justify-start">
                 <h2>Tags</h2>
-                  {item.tags && item.tags.map((tag) => (
-                    <Badge>{tag}</Badge>
-                  ))}
+                {item.tags && item.tags.map((tag) => (
+                  <Badge>{tag}</Badge>
+                ))}
               </div>
             </Card>
           )

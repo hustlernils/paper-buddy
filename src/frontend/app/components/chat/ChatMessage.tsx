@@ -1,16 +1,24 @@
+import { type ReactNode } from "react"
+
 export interface ChatMessageProps {
-    content: string,
-    role: string
+    role: "USER" | "SYSTEM"
+    children: ReactNode
 }
 
-export const ChatMessage = ({ content, role }: ChatMessageProps ) => {
-    const className = role === "USER" 
-        ? "self-end" 
-        : "self-start"
+export const ChatMessage = ({ role, children }: ChatMessageProps ) => 
+{
+  const className = role === "USER" 
+    ? "self-end" 
+    : "self-start"
 
-    return(
-        <div className={`m-1 inline-block max-w-[70%] rounded-xl p-2 bg-secondary text-secondary-foreground ${className}`}>
-            <h1>{content}</h1>
-        </div>
-    )
+  return(
+    <div className={`m-1 inline-block max-w-[70%] rounded-xl p-2 bg-secondary text-secondary-foreground ${className}`}>
+      {children}
+    </div>
+  )
+}
+
+export const MessageContent = ({ children }: { children: ReactNode }) => 
+{
+  return <div>{children}</div>
 }
