@@ -7,7 +7,7 @@ import { useFetch } from "./useFetch";
 export interface UsePapersResponse{
     papers: GetPapersResponse[], 
     paperDetails: GetPaperDetailsResponse | null
-    uploadPaper: (file: File | null) => Promise<void>, 
+    uploadPaper: (file: File | null, projectId: string | undefined) => Promise<void>, 
     refetch: () => Promise<void>
 }
 
@@ -58,7 +58,7 @@ export const usePapers = (paperId : string | undefined = undefined): UsePapersRe
     }
   }
 
-  const uploadPaper = async (file: File | null) => 
+  const uploadPaper = async (file: File | null, projectId: string | undefined = undefined) => 
   {
     try
     {
@@ -71,7 +71,15 @@ export const usePapers = (paperId : string | undefined = undefined): UsePapersRe
       const formData = new FormData();
       formData.append("file", file)
 
-      await api.post('/papers/upload', formData, 'form-data')
+      // TODO: implement params properly
+      if (projectId)
+      {
+        await api.post(`/papers/upload?projectId=${projectId}`, formData, 'form-data')
+      }
+      else
+      {
+        await api.post('/papers/upload', formData, 'form-data')
+      }
     }
     catch (error) 
     {

@@ -8,9 +8,10 @@ public static class UploadPaperEndpoint
     {
         app.MapPost("/papers/upload", async (
                 [FromServices] UploadPaperHandler handler,
-                IFormFile file) =>
+                IFormFile file,
+                Guid projectId) =>
             {
-                var request = new UploadPaperRequest(file);
+                var request = new UploadPaperRequest(file,  projectId);
                 var paperId = await handler.HandleAsync(request, cancellationToken: CancellationToken.None);
 
                 return Results.Ok(new { PaperId = paperId });

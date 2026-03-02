@@ -79,3 +79,8 @@ bash ./run-migration.sh <migration_file.sql>
 ### Nice to haves:
 - [ ] **User Authentication**: Add login/signup to save projects across sessions.
 - [ ] **External Integrations**: Connect to arXiv/Semantic Scholar for paper fetching and metadata enrichment.
+
+## Screenshots
+
+![image](./docs/screenshots/projects.png)
+![image](./docs/screenshots/project-details.png)
