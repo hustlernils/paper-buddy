@@ -20,7 +20,7 @@ export const ChatMessages = ( { messages, isSendingMessage }: ChatMessagesProps)
         )
       })}
       {isSendingMessage && (
-        <ChatMessage role="SYSTEM">
+        <ChatMessage role="ASSISTANT">
           <MessageContent>
             <TypingAnimation />
           </MessageContent>

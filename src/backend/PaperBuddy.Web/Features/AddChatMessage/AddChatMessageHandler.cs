@@ -10,26 +10,26 @@ public class AddChatMessageHandler(IDbConnection connection, ChatService chatSer
 {
     protected override async Task<AddChatMessageResponse> HandleAsync(AddChatMessageRequest request, CancellationToken cancellationToken)
     {
-        var userMessage = new ChatMessage()
-        {
-            Content = request.Content,
-            Role = request.Role,
-            ChatId = request.ChatId,
-            UserId = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a")
-        };
+        var userMessage = new ChatMessage(content: request.Content, role: request.Role, chatId: request.ChatId,
+            userId: new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a"));
 
-        // TODO: query existing messages and resend them to the LLM for context
-        
-        var systemAnswer = await chatService.GetAnswerAsync(userMessage.Content);
-        var systemMessage = new ChatMessage()
-        {
-            Content = systemAnswer,
-            Role = MessageRole.System,
-            ChatId = request.ChatId,
-            UserId = new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a")
-        };
-        
         await InsertMessage(userMessage);
+        
+        // query related messages for context
+        string sql = @"
+            SELECT role, content 
+            FROM chat_messages 
+            WHERE chat_id = @ChatId 
+            ORDER BY created_at ASC 
+            LIMIT 50";
+        
+        var conversationHistory = await Database.QueryAsync<ChatHistoryItem>(sql, new { ChatId = request.ChatId });
+        
+        var systemAnswer = await chatService.GetAnswerAsync(conversationHistory);
+        
+        var systemMessage = ChatMessage.CreateSystemMessage(content: systemAnswer, chatId: request.ChatId,
+            userId: new Guid("a3b99d2e-2fdf-4956-9690-cb6be5cf900a"));
+        
         await InsertMessage(systemMessage);
         
         return new AddChatMessageResponse(userMessage.Id);
