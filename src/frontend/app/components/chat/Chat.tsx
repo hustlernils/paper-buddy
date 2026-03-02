@@ -2,7 +2,7 @@ import { type ChatMessageResponse } from "../../types/api"
 import { ChatInput } from "./ChatInput" 
 import { ChatMessages } from "./ChatMessages"
 
-interface ChatProps{
+interface ChatProps {
     id: string,
     messages: ChatMessageResponse[],
     onSubmit: (content: string) => void

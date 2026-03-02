@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useChats } from "../hooks/useChats";
 import { useEffect } from "react";
 import { Chat } from "../components/chat/Chat";
+
 export const ChatPage = () =>{
     const { chatId } = useParams<{chatId: string}>();
 

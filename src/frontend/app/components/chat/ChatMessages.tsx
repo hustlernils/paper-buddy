@@ -9,10 +9,10 @@ export const ChatMessages = ( { messages }: ChatMessagesProps) =>
 {
   return (
     <div className="h-full overflow-auto pb-32 flex flex-col">
-      {messages.map((message: ChatMessageResponse, index: number) => 
+      {messages.map((message: ChatMessageResponse) => 
       {
         return(
-          <ChatMessage key={index} content={message.content} role={message.role}/>
+          <ChatMessage key={message.createdAt + message.role} content={message.content} role={message.role}/>
         )
       })}
     </div>

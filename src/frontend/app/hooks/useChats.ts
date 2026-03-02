@@ -19,6 +19,7 @@ export const useChats = (parentId?: string | undefined | null, parentType?: Pare
   const [chats, setChats] = useState<ChatResponse[]>([]);
   const [activeChat, setActiveChat] = useState<string | null>(null)
   const [chatMessages, setChatMessages] = useState<ChatMessageResponse[]>([])
+  const [isMessageLoading, setIsMessageLoading] = useState<boolean>(false)
 
   useEffect(() => 
   {
@@ -55,6 +56,8 @@ export const useChats = (parentId?: string | undefined | null, parentType?: Pare
 
   const sendChatMessage = async (content: string) =>
   {
+    setIsMessageLoading(true)
+    console.log(chatMessages)
     if(activeChat)
     {
       await api.post(`/chats/${activeChat}/messages`, { content: content})
@@ -64,7 +67,11 @@ export const useChats = (parentId?: string | undefined | null, parentType?: Pare
     setChatMessages(prev => [
       ...prev,
       {content, createdAt: "", role: "User"}])
+  
+      setIsMessageLoading(false)
   }
+
+  useEffect(() => console.log(chatMessages),[chatMessages])
 
   const fetchChatMessages = async (chatId : string) => 
   {
